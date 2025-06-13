@@ -373,7 +373,7 @@ void ofApp::loadFromAPI() {
                 ofJson json = ofJson::parse(response.data);
                 for (auto& record : json["items"]) {
                     std::string id = record["id"].get<std::string>();
-                    std::string image = record["image"].get<std::string>() + "?thumb=500x500";
+                    std::string image = record["image"].get<std::string>() + "?thumb=400x400";
                     std::string mask = record["mask"].get<std::string>() + "?thumb=200x200";
                     std::string topic = record["field"].get<std::string>();
                     std::string mask_d = record["mask_data"].get<std::string>();
