@@ -1,4 +1,6 @@
-bin/
+bin/EVA_01_debug.app
+bin/EVA_01Debug.app
+bin/EVA_02
 .vscode
 EVA_01.xcodeproj
 obj/

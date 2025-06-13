@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<group>
+	<debug>1</debug>
+	<debug_computer_vision>0</debug_computer_vision>
+	<debug_sound>0</debug_sound>
+	<live_input>0</live_input>
+	<threshold>20</threshold>
+	<sample_size>20</sample_size>
+	<variance_threshold>0.5</variance_threshold>
+	<Enable_CV>0</Enable_CV>
+	<state>0</state>
+	<input_source>0</input_source>
+</group>
+<CV_debug>
+	<Enable_CV>0</Enable_CV>
+	<debug_computer_vision>0</debug_computer_vision>
+	<debug_sound>0</debug_sound>
+	<live_input>1</live_input>
+	<threshold>20</threshold>
+	<sample_size>20</sample_size>
+	<input_source>0</input_source>
+	<variance_threshold>0.5</variance_threshold>
+</CV_debug>
+<main>
+	<debug>1</debug>
+	<state>0</state>
+</main>
