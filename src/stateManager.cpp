@@ -34,7 +34,7 @@ void StateManager::setState(int newState) {
     }
     if(newState == 50) {
         toSend.setHex(0x00FFFF); OSCManager::getInstance().sendColor(toSend);
-        OSCManager::getInstance().sendCoin(); 
+        OSCManager::getInstance().sendCoin();
     }
     if(newState == 60) {
         toSend.setHex(0xFFFFFF); OSCManager::getInstance().sendColor(toSend);

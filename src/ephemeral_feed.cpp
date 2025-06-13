@@ -108,6 +108,7 @@ void ephemeral_feed::update(){
     }
 }
 void ephemeral_feed::draw(){
+    ofDisableArbTex(); // optional depending on usage
     int state = StateManager::getInstance().getState();
     ofPushMatrix();
     visible_posts.clear();
@@ -143,6 +144,8 @@ void ephemeral_feed::draw(){
     ofSetColor(255);
     largeFont.drawString("ANALYSING", -r.width, r.height);
     ofPopMatrix();
+    ofEnableArbTex(); // optional depending on usage
+
 }
 
 

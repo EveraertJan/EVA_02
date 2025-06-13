@@ -81,7 +81,8 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
            ) {
             
             ofTranslate(x_offset, y_offset, z_offset);
-            
+            //    ofDisableAntiAliasing();
+
             
             if(colorByTopic) {
                 ofSetColor(100, 255, 0);
@@ -119,6 +120,8 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                 int off_y = -mask_rect.y - (mask_rect.height/2);
                 if(masked) {
                     ofPushMatrix();
+                    
+                    mask.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
                     img.getTexture().setAlphaMask(mask.getTexture());
                     ofSetColor(200, 0, 0);
                     ofNoFill();

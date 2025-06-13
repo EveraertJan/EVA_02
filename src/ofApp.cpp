@@ -367,8 +367,7 @@ void ofApp::loadFromAPI() {
             
             
             
-            ofHttpResponse response = ofLoadURL("http://127.0.0.1:8090/api/collections/posts/records?perPage=100&filter=(field='" +id +"')");
-            ofLog() << "http://127.0.0.1:8090/api/collections/posts/records?perPage=100&filter=(field='" +id +"')";
+            ofHttpResponse response = ofLoadURL("http://127.0.0.1:8090/api/collections/posts/records?perPage=60&filter=(field='" +id +"')");
             try {
                 ofJson json = ofJson::parse(response.data);
                 for (auto& record : json["items"]) {
