@@ -119,7 +119,7 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                 int off_y = -mask_rect.y - (mask_rect.height/2);
                 if(masked) {
                     ofPushMatrix();
-                    gs_img.getTexture().setAlphaMask(mask.getTexture());
+                    img.getTexture().setAlphaMask(mask.getTexture());
                     ofSetColor(200, 0, 0);
                     ofNoFill();
                     float scale = (500*500)/(mask_rect.width * mask_rect.height);
@@ -132,7 +132,7 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                     }
                     ofFill();
                     ofSetColor(255);
-                    gs_img.draw(off_x, off_y, size, size);
+                    img.draw(off_x, off_y, size, size);
                     ofPopMatrix();
                 } else {
                     ofSetColor(255);

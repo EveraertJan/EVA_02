@@ -340,7 +340,7 @@ void ofApp::windowResized(int w, int h){
 
 //--------------------------------------------------------------
 void ofApp::gotMessage(ofMessage msg){
-
+ 
 }
 
 //--------------------------------------------------------------
@@ -352,29 +352,58 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 void ofApp::loadFromAPI() {
     int post_id = 0;
     std::vector<std::string> imageUrls;
+    
     std::string baseUrl = "http://127.0.0.1:8090/api/files/pbc_1125843985/";
-    ofHttpResponse response = ofLoadURL("http://127.0.0.1:8090/api/collections/posts/records?perPage=999&filter=(field!=null)");
+    ofHttpResponse topic_response = ofLoadURL("http://127.0.0.1:8090/api/collections/topics/records");
+    
+    
     try {
-        ofJson json = ofJson::parse(response.data);
-        std::cout << "init" << endl;
-        for (auto& record : json["items"]) {
-            std::string id = record["id"].get<std::string>();
-            std::string image = record["image"].get<std::string>() + "?thumb=400x400";
-            std::string mask = record["mask"].get<std::string>() + "?thumb=400x400";
-            std::string topic = record["field"].get<std::string>();
-            std::string mask_d = record["mask_data"].get<std::string>();
-            int rating = record["rating"].get<int>();
-            if(topic != "") {
-                post p;
-                p.setup( ofToString(baseUrl + id + "/" + image), topic, post_id, baseUrl + id + "/" + mask, rating, mask_d);
-                post_id += 1;
-                base_posts.push_back(p);
+        ofJson topic_json = ofJson::parse(topic_response.data);
+        std::cout << "init topics" << endl;
+        for (auto& topic_record : topic_json["items"]) {
+            std::string id = topic_record["id"].get<std::string>();
+            std::string label = topic_record["label"].get<std::string>();
+            std::cout << id << ", " << label << endl;
+            
+            
+            
+            ofHttpResponse response = ofLoadURL("http://127.0.0.1:8090/api/collections/posts/records?perPage=100&filter(topic=" +id +")");
+            try {
+                ofJson json = ofJson::parse(response.data);
+                for (auto& record : json["items"]) {
+                    std::string id = record["id"].get<std::string>();
+                    std::string image = record["image"].get<std::string>() + "?thumb=400x400";
+                    std::string mask = record["mask"].get<std::string>() + "?thumb=200x200";
+                    std::string topic = record["field"].get<std::string>();
+                    std::string mask_d = record["mask_data"].get<std::string>();
+                    int rating = record["rating"].get<int>();
+                    if(topic != "") {
+                        post p;
+                        p.setup( ofToString(baseUrl + id + "/" + image), topic, post_id, baseUrl + id + "/" + mask, rating, mask_d);
+                        post_id += 1;
+                        base_posts.push_back(p);
+                    }
+                    
+                }
             }
+            catch (std::exception exc) {
+                std::cout << "could not fetch posts" << endl;
+                error = "could not fetch posts";
+            }
+            
+            
+            
+            
+            
             
         }
     }
     catch (std::exception exc) {
-        std::cout << "could not fetch posts" << endl;
-        error = "could not fetch posts";
+        std::cout << "could not fetch topics" << endl;
+        error = "could not fetch topics";
     }
+    
+    
+    ofLog() << base_posts.size() << " posts loaded";
+    
 }
