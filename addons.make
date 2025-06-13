@@ -1,0 +1,7 @@
+ofxAssimpModelLoader
+ofxBlur
+ofxGui
+ofxMediaPipePython
+ofxOpenCv
+ofxOsc
+ofxVectorGraphics
