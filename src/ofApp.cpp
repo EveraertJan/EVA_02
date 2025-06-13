@@ -32,7 +32,7 @@ void ofApp::setup(){
     gui.add(debug.setup("debug", true));
     gui.add(state.setup("state", 0, 0, 3));
     gui.add(history_size.setup("history size", 20, 10, 100));
-    gui.add(click_time.setup("time clicking (in frames)", 30, 1, 120));
+    gui.add(click_time.setup("time clicking (in frames)", 6, 1, 120));
     bHide = true;
 
     mediapipe.setup();
