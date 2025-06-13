@@ -367,12 +367,13 @@ void ofApp::loadFromAPI() {
             
             
             
-            ofHttpResponse response = ofLoadURL("http://127.0.0.1:8090/api/collections/posts/records?perPage=100&filter(topic=" +id +")");
+            ofHttpResponse response = ofLoadURL("http://127.0.0.1:8090/api/collections/posts/records?perPage=100&filter=(field='" +id +"')");
+            ofLog() << "http://127.0.0.1:8090/api/collections/posts/records?perPage=100&filter=(field='" +id +"')";
             try {
                 ofJson json = ofJson::parse(response.data);
                 for (auto& record : json["items"]) {
                     std::string id = record["id"].get<std::string>();
-                    std::string image = record["image"].get<std::string>() + "?thumb=400x400";
+                    std::string image = record["image"].get<std::string>() + "?thumb=600x600";
                     std::string mask = record["mask"].get<std::string>() + "?thumb=200x200";
                     std::string topic = record["field"].get<std::string>();
                     std::string mask_d = record["mask_data"].get<std::string>();
@@ -403,7 +404,10 @@ void ofApp::loadFromAPI() {
         error = "could not fetch topics";
     }
     
-    
+    ofRandomize(base_posts);
+    ofRandomize(base_posts);
+    ofRandomize(base_posts);
+    ofRandomize(base_posts);
     ofLog() << base_posts.size() << " posts loaded";
     
 }
