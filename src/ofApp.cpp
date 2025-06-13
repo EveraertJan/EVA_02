@@ -202,10 +202,8 @@ void ofApp::draw() {
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
         
         drawState("50 - REWARD");
-        consent_content.draw("TRANSACTION", "COMPLETE", "The system detected lowered empathy, often in the form of // rapid scrolling or ignoring the subject images. This concludes the transaction. // // You will receive payout. // // Find your reward in the coin slide.", "", "Restart");
-        if(consent_content.accepted == 1) {
-            reset();
-        } else if(consent_content.accepted == 0) {
+        ack_complete.draw("TRANSACTION", "COMPLETE", "The system detected lowered empathy, often in the form of // rapid scrolling or ignoring the subject images. This concludes the transaction. // // You will receive payout. // // Find your reward in the coin slide.", "", "Restart");
+        if(ack_complete.accepted == 0) {
             reset();
         }
     }
