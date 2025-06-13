@@ -24,4 +24,6 @@
 <main>
 	<debug>1</debug>
 	<state>0</state>
+	<history_size>20</history_size>
+	<time_clicking__in_frames_>6</time_clicking__in_frames_>
 </main>

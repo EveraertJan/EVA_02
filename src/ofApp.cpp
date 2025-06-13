@@ -32,6 +32,7 @@ void ofApp::setup(){
     gui.add(debug.setup("debug", true));
     gui.add(state.setup("state", 0, 0, 3));
     gui.add(history_size.setup("history size", 20, 10, 100));
+    gui.add(click_time.setup("time clicking (in frames)", 30, 1, 120));
     bHide = true;
 
     mediapipe.setup();
@@ -87,6 +88,11 @@ void ofApp::reset() {
 //--------------------------------------------------------------
 void ofApp::update(){
     ofBackground(255);
+    
+    consent_transaction.press_time = click_time;
+    consent_content.press_time = click_time;
+    ack_complete.press_time = click_time;
+    ack_topic_found.press_time = click_time;
     
     analytics_block.update();
     feed.update();

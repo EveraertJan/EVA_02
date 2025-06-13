@@ -76,6 +76,7 @@ public:
     ofxToggle enable_cv;
     ofxIntSlider treshold;
     ofxIntSlider sample_size;
+    ofxIntSlider click_time;
     ofxIntSlider state;
     ofxIntSlider input_source;
     
