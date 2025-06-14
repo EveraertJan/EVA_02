@@ -101,7 +101,14 @@ void mediapipeTracker::update(){
             
             ofVec2f tracked = polyTrack(orient.x, orient.y, orient.z, orient.w, EYE_LOOK_LEFT, EYE_LOOK_RIGHT, EYE_LOOK_UP, EYE_LOOK_DOWN, face->getPosition().x, face->getPosition().y, face->getPosition().z);
             
-            view_guess = tracked;
+//            view_guess = tracked;
+            ofVec2f avg;
+            for(auto & it : view_cache) {
+                avg.x += it.x;
+                avg.y += it.y;
+               
+            }
+            view_guess = ofVec2f(avg.x/view_cache.size(), avg.y / view_cache.size());
             
         } else {
             StateManager::getInstance().setNoPerson( StateManager::getInstance().getNoPerson() + 1 );
@@ -122,6 +129,7 @@ void mediapipeTracker::update(){
 //--------------------------------------------------------------
 void mediapipeTracker::draw(){
     glm::quat orient;
+    ofVec2f tracked;
     std::shared_ptr<ofx::MediaPipe::Face> face;
 	if( mVideoTexture.getWidth() > 0 && mVideoTexture.getHeight() > 0 ) {
         if(debug) {
@@ -177,17 +185,45 @@ void mediapipeTracker::draw(){
                 ofPopMatrix();
             }
             
-            ofVec2f tracked = polyTrack(orient.x, orient.y, orient.z, orient.w, EYE_LOOK_LEFT, EYE_LOOK_RIGHT, EYE_LOOK_UP, EYE_LOOK_DOWN, face->getPosition().x, face->getPosition().y, face->getPosition().z);
+            tracked = polyTrack(orient.x, orient.y, orient.z, orient.w, EYE_LOOK_LEFT, EYE_LOOK_RIGHT, EYE_LOOK_UP, EYE_LOOK_DOWN, face->getPosition().x, face->getPosition().y, face->getPosition().z);
+            
+            if(StateManager::getInstance().debug){
+                
+                ofSetColor(0, 255, 255);
+                ofNoFill();
+                ofDrawCircle(tracked.x, tracked.y, 10);
+            }
             
             
-            ofSetColor(0, 255, 255);
-            ofDrawCircle(tracked.x, tracked.y, 3);
             
             
             view_cache.push_back(tracked);
-            while(view_cache.size() > 5) {
+            while(view_cache.size() > 20) {
                 view_cache.erase(view_cache.begin());
             }
+        }
+        
+        
+        int rounding = 100;
+        int size = 20;
+        ofVec2f avg;
+        for(auto & it : view_cache) {
+            avg.x += it.x;
+            avg.y += it.y;
+            ofSetColor(0, 255, 50);
+            ofNoFill();
+            
+            
+            int i = round(it.x / rounding) * rounding;
+            int j = round(it.y / rounding) * rounding;
+            ofFill();
+        
+            ofDrawRectangle(50+i+2, 50+j, 1, 5);
+            ofDrawRectangle(50+i, 50+j + 2, 5, 1);
+                
+        }
+        if(StateManager::getInstance().debug) {
+            ofDrawCircle(avg.x/view_cache.size(), avg.y / view_cache.size(), 20);
         }
         
         if(StateManager::getInstance().debug) {

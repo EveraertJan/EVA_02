@@ -41,6 +41,8 @@ class StateManager {
         int history_size = 30;
         int click_through = 0;
     
+        bool resetNecessary = false;
+    
     private:
         StateManager() = default;
         StateManager(const StateManager&) = delete;

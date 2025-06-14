@@ -100,12 +100,6 @@ void ephemeral_feed::update(){
         position.y  += (target.y - position.y) / speed_in_frames;
         position.z  += (target.z - position.z) / speed_in_frames;
     }
-    if(autoTrigger != -1) {
-        autoTrigger--;
-        if(autoTrigger == 0) {
-            trigger();
-        }
-    }
 }
 void ephemeral_feed::draw(){
     ofDisableArbTex(); // optional depending on usage
@@ -224,17 +218,17 @@ post * ephemeral_feed::getPostOnTarget(ofVec2f target) {
     return &dud;
 }
 void ephemeral_feed::cube() {
-  for( int i = 0; i < posts.size(); i++) {
-    int id = posts[i].post_id;
-    int n = 8;
-    int x = id % n;
-    int y = (id / n) % n;
-    int z = id / (n * n);
-    posts[i].greyScale = false;
-    posts[i].colorByTopic = true;
-    posts[i].size = 240;
-    posts[i].target_position = ofVec3f(x * 400, y * 400, z * 400);
-  }
+//  for( int i = 0; i < posts.size(); i++) {
+//    int id = posts[i].post_id;
+//    int n = 8;
+//    int x = id % n;
+//    int y = (id / n) % n;
+//    int z = id / (n * n);
+//    posts[i].greyScale = false;
+//    posts[i].colorByTopic = true;
+//    posts[i].size = 240;
+//    posts[i].target_position = ofVec3f(x * 400, y * 400, z * 400);
+//  }
 }
 
 void ephemeral_feed::grid() {

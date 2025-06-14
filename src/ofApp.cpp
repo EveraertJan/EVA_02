@@ -98,6 +98,11 @@ void ofApp::update(){
     feed.update();
     mediapipe.update();
     look_at = mediapipe.view_guess;
+    
+    if(StateManager::getInstance().resetNecessary) {
+        StateManager::getInstance().resetNecessary = false;
+        reset();
+    }
 }
 
 //--------------------------------------------------------------
@@ -211,10 +216,10 @@ void ofApp::draw() {
     if(state == 10) {
     }
 
-    if(state >= 20 && state < 50) {
+    if(state == 50) {
         analytics_block.draw();
-        mediapipe.draw();
     }
+    mediapipe.draw();
     
     if(StateManager::getInstance().debug){
         gui.draw();
@@ -377,7 +382,7 @@ void ofApp::loadFromAPI() {
                 for (auto& record : json["items"]) {
                     std::string id = record["id"].get<std::string>();
                     std::string image = record["image"].get<std::string>() + "?thumb=400x400";
-                    std::string mask = record["mask"].get<std::string>() + "?thumb=200x200";
+                    std::string mask = record["mask"].get<std::string>() + "?thumb=400x400";
                     std::string topic = record["field"].get<std::string>();
                     std::string mask_d = record["mask_data"].get<std::string>();
                     int rating = record["rating"].get<int>();
