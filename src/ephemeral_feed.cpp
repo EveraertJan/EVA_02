@@ -165,7 +165,6 @@ post * ephemeral_feed::getPostOnTarget(ofVec2f target) {
     int state = StateManager::getInstance().getState();
     for( int i = 0; i < posts.size(); i++) {
         if(posts[i].in_view) {
-            
             if(state == 20) {
             
                 int x = posts[i].screen_position.x + posts[i].size/2;
@@ -214,6 +213,7 @@ post * ephemeral_feed::getPostOnTarget(ofVec2f target) {
                 
             }
         }
+        posts[i].focused = false;
     }
     return &dud;
 }

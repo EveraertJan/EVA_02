@@ -182,6 +182,7 @@ void ofApp::draw() {
         
         post * hovered = feed.getPostOnTarget(look_at);
         hovered->time_watched += (1000 / ofGetFrameRate());
+        hovered->focused = true;
         
         if(ofGetFrameNum() % 10) {
             analytics_block.analyse(&feed.posts);
@@ -214,7 +215,7 @@ void ofApp::draw() {
             hovered->focused = true;
             if(hovered->post_id != -1) {
                 if(hovered->topic != StateManager::getInstance().topics[7].name) {
-                    StateManager::getInstance().setEmpathy(0.01);
+                    StateManager::getInstance().setEmpathy(0.003);
                 } else {
                     StateManager::getInstance().setEmpathy(-0.01);
                     
@@ -365,6 +366,17 @@ void ofApp::mousePressed(int x, int y, int button){
         if(clicked->post_id != -1) {
             std::cout << "topic clicked" << StateManager::getInstance().topics[clicked->topic_id].handle << endl;
             clicked->clicked += 1;
+        }
+    }
+    time_passed_since_last =ofGetCurrentTime().seconds - last_touch;
+    last_touch = ofGetCurrentTime().seconds;
+    
+    if(StateManager::getInstance().getState() == 40) {
+        if(time_passed_since_last < 1) {
+            StateManager::getInstance().click_through += 1;
+        }
+        else if(time_passed_since_last > 5) {
+            StateManager::getInstance().click_through -= 1;
         }
     }
 }

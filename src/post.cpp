@@ -64,7 +64,7 @@ void post::loadMask() {
 void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
     int state =  StateManager::getInstance().getState();
     
-    if(!deleted) {
+//    if(!deleted) {
         ofPushMatrix();
         
         int x_offset = round(ofGetWidth() / 2 + (position.x - look_at.x)) + 4;
@@ -115,6 +115,12 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
             if(state == 20) {
                 ofTranslate(size/2, size/2, 0);
             }
+            if(deleted) {
+                ofSetColor(255, 255, 255, 30);
+                
+            } else {
+                ofSetColor(255);
+            }
             if(greyScale) {
                 int off_x = -mask_rect.x - (mask_rect.width/2);
                 int off_y = -mask_rect.y - (mask_rect.height/2);
@@ -123,6 +129,7 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                     
                     mask.getTexture().setTextureMinMagFilter(GL_NEAREST, GL_NEAREST);
                     img.getTexture().setAlphaMask(mask.getTexture());
+                    ofPushStyle();
                     ofSetColor(200, 0, 0);
                     ofNoFill();
                     float scale = (500*500)/(mask_rect.width * mask_rect.height);
@@ -133,8 +140,9 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                     if(StateManager::getInstance().debug) {
                         ofDrawRectangle(-mask_rect.width/2, -mask_rect.height/2, mask_rect.width, mask_rect.height);
                     }
+                    
+                    ofPopStyle();
                     ofFill();
-                    ofSetColor(255);
                     img.draw(off_x, off_y, size, size);
                     ofPopMatrix();
                 } else {
@@ -173,7 +181,7 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
             in_view = false;
         }
         
-    }
+//    }
     ofSetColor(0);
 }
 

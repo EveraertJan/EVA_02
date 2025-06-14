@@ -104,4 +104,7 @@ public:
     vector<post> base_posts;
 
     std::string error = "";
+    
+    int last_touch;
+    int time_passed_since_last;
 };

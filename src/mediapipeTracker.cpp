@@ -217,8 +217,9 @@ void mediapipeTracker::draw(){
             ofFill();
             
             ofSetColor(195, 247, 40);
-            ofDrawRectangle(50+i+2, 50+j, 1, 5);
-            ofDrawRectangle(50+i, 50+j + 2, 5, 1);
+            
+            ofDrawRectangle(i+4, j, 2, 10);
+            ofDrawRectangle(i, j + 4, 10, 2);
                 
         }
         if(StateManager::getInstance().debug) {
