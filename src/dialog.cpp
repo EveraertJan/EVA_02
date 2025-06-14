@@ -24,7 +24,7 @@ void dialog::draw(string question, string highlight,  string subtext, string agr
     ofDrawRectangle(-320, 0, 640, 600);
     ofSetColor(0);
     drawHighlightedText(question, "SELL", 80, 600, mono_bold);
-    largeFont.drawString(highlight, -largeFont.stringWidth(highlight)/2, 200);
+    largeFont.drawString(highlight, -largeFont.stringWidth(highlight)/2, 220);
     drawHighlightedText(subtext, "", 300, 600, font);
     
     if(agree.length() > 0) {

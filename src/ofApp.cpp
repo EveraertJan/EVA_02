@@ -258,7 +258,7 @@ void ofApp::draw() {
         ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().getEmpathy()), ofVec2f(500, 540));
         
         
-        if(StatisticsManager::getInstance().click_throughs >= 10) {
+        if(StateManager::getInstance().click_through >= 10) {
             StatisticsManager::getInstance().reason = "boredom, rapid scrolling";
             ofLog() << "rapid scrolling";
             StateManager::getInstance().setEmpathy(-1);
@@ -283,10 +283,6 @@ void ofApp::draw() {
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
         
         
-        
-        
-        
-        
         if(StateManager::getInstance().state_running > 40) {
             drawState("50 - REWARD");
             
@@ -295,12 +291,19 @@ void ofApp::draw() {
             ss << std::endl << StatisticsManager::getInstance().reason << " // // ";
             ss << std::endl << "Find your reward in the coin slide."  << "//";
             ss << std::endl << "Clicks: "  << ofToString(StatisticsManager::getInstance().clicks)  << " //" ;
-            ss << std::endl << "Rapid scrolling instances: " <<  ofToString(StatisticsManager::getInstance().click_throughs) << " times";
+            ss << std::endl << "Rapid scrolling instances: " <<  ofToString(StateManager::getInstance().click_through) << " times";
             
-            ack_complete.draw("TRANSACTION", "COMPLETE", ss.str(), "", "Restart");
+            ack_complete.draw("", "COMPLETE", ss.str(), "", "Restart");
             if(ack_complete.accepted == 0) {
                 reset();
             }
+        }
+        std::vector<double> history = StatisticsManager::getInstance().empathy_history;
+        for(int i = 0; i < history.size(); i++) {
+            double y = ofMap(history[i], 0, 1, 0, 100);
+            double x = ofMap(i, 0, history.size(), 0, 600);
+            ofSetColor(255);
+            ofDrawRectangle(ofGetWidth() / 2 + x - 300, ofGetHeight()/2 - 100 - y, 1, 1);
         }
     }
     
@@ -428,14 +431,13 @@ void ofApp::mousePressed(int x, int y, int button){
     if(StateManager::getInstance().getState() == 40) {
         if(time_passed_since_last < 1) {
             StateManager::getInstance().click_through += 1;
-            
+            StateManager::getInstance().setEmpathy(-0.1);
             if(StateManager::getInstance().click_through > 10) {
                 StateManager::getInstance().setState(50);
             }
         }
         else if(time_passed_since_last > 5) {
             StateManager::getInstance().click_through -= 5;
-            StatisticsManager::getInstance().click_throughs -= 5;
         }
         StatisticsManager::getInstance().click_throughs++;
         
