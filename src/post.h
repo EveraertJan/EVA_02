@@ -42,6 +42,7 @@ class post : public ofBaseApp{
         // analytics track
         int time_watched = 0;
         int focus_time = 0;
+        bool focused = false;
 
         int clicked = 0;
         bool in_view;

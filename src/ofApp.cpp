@@ -2,6 +2,8 @@
 #include "stateManager.hpp"
 #include "OSCManager.h"
 
+
+//ED217C
 //--------------------------------------------------------------
 void ofApp::setup(){
     StateManager::getInstance().topics.push_back({"828w2zrrs1bgv36", "war", 0, 0});
@@ -61,7 +63,7 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::reset() {
     StateManager::getInstance().setState(0);
-    StateManager::getInstance().setEmpathy(-1);
+    StateManager::getInstance().setEmpathy(1);
     StateManager::getInstance().setDeduced(-1);
     StateManager::getInstance().history_size = history_size;
     StateManager::getInstance().click_through = 0;
@@ -205,20 +207,32 @@ void ofApp::draw() {
     }
     if(state == 40) {
         // enforce
-        if(StateManager::getInstance().state_running > 20) {
+        if(StateManager::getInstance().state_running > 60) {
             
             post * hovered = feed.getPostOnTarget(look_at);
             hovered->focus_time += 1;
+            hovered->focused = true;
+            if(hovered->post_id != -1) {
+                if(hovered->topic != StateManager::getInstance().topics[7].name) {
+                    StateManager::getInstance().setEmpathy(0.01);
+                } else {
+                    StateManager::getInstance().setEmpathy(-0.01);
+                    
+                }
+            }
         }
-        analytics_block.drawEmpathyBold();
         feed.draw();
         drawState("40 - ENFORCING");
         
+        analytics_block.drawEmpathyBold();
         
-        if(ofGetFrameNum() % 30) {
-            analytics_block.detect_empathy(&feed.posts, feed.triggered);
-            feed.triggered = false;
-        }
+//        if(ofGetFrameNum() % 30) {
+//            analytics_block.detect_empathy(&feed.posts, feed.triggered);
+//            feed.triggered = false;
+//        }
+        
+        
+        
         if( StateManager::getInstance().getEmpathy() < 0.2 || StateManager::getInstance().click_through > 10) {
             StateManager::getInstance().setState(50);
         }
@@ -340,6 +354,10 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 //    mediapipe.calibrate();
+    if(StateManager::getInstance().getState() < 20) {
+        offset_x =x - mediapipe.view_cache[mediapipe.view_cache.size()-1].x;
+        offset_y = y - mediapipe.view_cache[mediapipe.view_cache.size()-1].y;
+    }
     
     if(StateManager::getInstance().getState() == 20){
         

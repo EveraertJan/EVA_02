@@ -44,14 +44,15 @@ void comments::draw(){
     logo.draw(20, 0, 100, 100);
     ofPopMatrix();
     ofPushMatrix();
-    ofTranslate(ofGetWidth()/2, ofGetHeight()/2 - (floor(visible_comments_arr[0].length() / 16) * 40 ));
+    ofTranslate(100, ofGetHeight()/2 - (floor(visible_comments_arr[0].length() / 16) * 40 ));
     ofSetColor(0);
     
     float y = 0;
     for (const auto &line : wrapTextCenter(visible_comments_arr[0], ofGetWidth() * 0.45, font)) {
         ofRectangle r = font.getStringBoundingBox(line, 0, y);
-        
-        ofSetColor(115, 238, 220);
+        ofColor blue;
+        blue.setHex(0x3FA7D6);
+        ofSetColor(blue);
         ofDrawRectangle(r.x, r.y+10, r.width, 50);
         ofSetColor(0);
         font.drawString(line, 0, y);

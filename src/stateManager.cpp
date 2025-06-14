@@ -53,29 +53,39 @@ int StateManager::getDeduced() const {
 }
 
 void StateManager::setEmpathy(float newempathy) {
-    if(newempathy == -1) {
-        // reset
-        empathy_history.clear();
-        for(int i = 0; i < 30; i++) {
-            empathy_history.push_back(1);
-        }
+//    if(newempathy == -1) {
+//        // reset
+//        empathy_history.clear();
+//        for(int i = 0; i < 30; i++) {
+//            empathy_history.push_back(1);
+//        }
+//    }
+//    empathy_history.push_back(newempathy);
+//    if(empathy_history.size() > history_size) {
+//        empathy_history.erase(empathy_history.begin());
+//    }
+    
+    empathy += newempathy;
+    
+    if(empathy > 1) {
+        empathy = 1;
     }
-    empathy_history.push_back(newempathy);
-    if(empathy_history.size() > history_size) {
-        empathy_history.erase(empathy_history.begin());
+    if(empathy < 0) {
+        empathy = 0;
     }
 }
 float StateManager::getEmpathy() const {
-    float tot = 0;
-    for(auto & h : empathy_history) {
-        tot  += h;
-    }
-    return tot / empathy_history.size();
+//    float tot = 0;
+//    for(auto & h : empathy_history) {
+//        tot  += h;
+//    }
+//    return tot / empathy_history.size();
+    return empathy;
 }
 
 void StateManager::setNoPerson(int newNoPerson) {
     no_person = newNoPerson;
-    if(no_person > ofGetFrameRate() * 5) {
+    if(no_person > ofGetFrameRate() * 30) {
         resetNecessary = true;
         currentState = 0;
     }

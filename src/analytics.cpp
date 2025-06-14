@@ -3,7 +3,7 @@
 
 void analytics::setup(){
     font.load("font/mono.ttf", 12);
-    empathyFont.load("font/mono.ttf", 124);
+    empathyFont.load("font/Input_Desktop/InputMono-Medium-Edu.ttf", 124);
     largeFont.load("font/dots.ttf", 36);
     font.setLetterSpacing(.9);
 
@@ -85,11 +85,17 @@ void analytics::detect_empathy(vector<post>* posts, bool triggered){
     }
     int total_watch_time = topics[deduced].focus_time + topics[topics.size()-1].focus_time;
     if(total_watch_time > 10) {
+        
+        
+        
         float difference = (float)topics[deduced].focus_time / ((float)topics[topics.size()-1].focus_time + 0.0001);
         if(difference > 1) {
             difference = 1;
         }
-        StateManager::getInstance().setEmpathy(difference);
+        
+        
+        ofLog() <<(difference - 0.5) * 0.02 << " on " << StateManager::getInstance().getEmpathy();
+        StateManager::getInstance().setEmpathy((difference - 0.5) * 0.02);
     }
     if(triggered) {
        
@@ -152,13 +158,14 @@ void analytics::drawEmpathyBold() {
     int y = 0;
     ofPushStyle();
     ofPushMatrix();
-    ofTranslate(ofGetWidth() - 150, 100);
+    ofTranslate(ofGetWidth() - 180, 200);
+    
     ofRotateDeg(90);
     
     ofRectangle e_frame = empathyFont.getStringBoundingBox("EMPATHY LEFT", x, y);
     ofFill();
-    ofSetColor(100, 247, 40);
-    ofDrawRectangle(e_frame.x, e_frame.y, e_frame.getWidth() * StateManager::getInstance().getEmpathy(), e_frame.getHeight());
+    ofSetColor(195, 247, 40);
+    ofDrawRectangle(e_frame.x, e_frame.y, e_frame.getWidth() * ofMap(StateManager::getInstance().getEmpathy(), 0.2, 1, 0, 1), e_frame.getHeight());
     ofSetColor(0, 0, 0);
     empathyFont.drawString("EMPATHY LEFT", x, y);
     ofPopStyle();
