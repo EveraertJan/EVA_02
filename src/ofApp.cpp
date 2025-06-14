@@ -1,6 +1,7 @@
 #include "ofApp.h"
 #include "stateManager.hpp"
 #include "OSCManager.h"
+#include "statisticsManager.hpp"
 
 
 //ED217C
@@ -62,6 +63,10 @@ void ofApp::setup(){
 
 //--------------------------------------------------------------
 void ofApp::reset() {
+    StatisticsManager::getInstance().reset();
+    
+    OSCManager::getInstance().setup();
+    
     StateManager::getInstance().setState(0);
     StateManager::getInstance().setEmpathy(1);
     StateManager::getInstance().setDeduced(-1);
@@ -128,6 +133,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw() {
+    
     ofSetColor(200);
     ofFill();
     int state = StateManager::getInstance().getState();
@@ -197,6 +203,8 @@ void ofApp::draw() {
         std::string top = StateManager::getInstance().topics[StateManager::getInstance().getDeduced()].handle;
         ofSetColor(255);
         ack_topic_found.draw("TOPIC DEDUCED", top, "Press continue to reduce empathy. // // We will use  techniques known to cause empathy fatigue // to achieve this. // Aborting will seize paiment", "Continue", "Abort");
+        ofSetColor(0);
+        ofFill();
         drawState("30 - OPTIMISING");
         if(ack_topic_found.accepted == 1) {
             StateManager::getInstance().setState(40);
@@ -222,6 +230,7 @@ void ofApp::draw() {
                 }
             }
         }
+        StatisticsManager::getInstance().empathy_history.push_back(StateManager::getInstance().getEmpathy());
         feed.draw();
         drawState("40 - ENFORCING");
         
@@ -233,8 +242,11 @@ void ofApp::draw() {
 //        }
         
         
-        
-        if( StateManager::getInstance().getEmpathy() < 0.2 || StateManager::getInstance().click_through > 10) {
+        if(StateManager::getInstance().click_through > 10) {
+            StateManager::getInstance().setState(50);
+            
+        }
+        if( StateManager::getInstance().getEmpathy() < 0.2) {
             StateManager::getInstance().setState(50);
         }
     }
@@ -243,10 +255,20 @@ void ofApp::draw() {
         ofSetColor(255);
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
         
-        drawState("50 - REWARD");
-        ack_complete.draw("TRANSACTION", "COMPLETE", "The system detected lowered empathy, often in the form of // rapid scrolling or ignoring the subject images. This concludes the transaction. // // You will receive payout. // // Find your reward in the coin slide.", "", "Restart");
-        if(ack_complete.accepted == 0) {
-            reset();
+        if(StateManager::getInstance().state_running > 40) {
+            drawState("50 - REWARD");
+            
+            stringstream ss;
+            ss << std::endl << "The system detected lowered empathy, often in the form of";
+            ss << std::endl << "rapid scrolling or ignoring the subject images. This concludes the transaction." << endl;
+            ss << std::endl << "Find your reward in the coin slide." << endl;
+            ss << std::endl << "Clicks: " + ofToString(StatisticsManager::getInstance().clicks);
+            ss << std::endl << "Rapid scrolling instances: " + ofToString(StatisticsManager::getInstance().click_throughs) + " times";
+            
+            ack_complete.draw("TRANSACTION", "COMPLETE", ss.str(), "", "Restart");
+            if(ack_complete.accepted == 0) {
+                reset();
+            }
         }
     }
     
@@ -356,8 +378,10 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
 //    mediapipe.calibrate();
     if(StateManager::getInstance().getState() < 20) {
-        offset_x =x - mediapipe.view_cache[mediapipe.view_cache.size()-1].x;
-        offset_y = y - mediapipe.view_cache[mediapipe.view_cache.size()-1].y;
+        if(mediapipe.view_cache.size() > 0) {
+            offset_x = x - mediapipe.view_cache[mediapipe.view_cache.size()-1].x;
+            offset_y = y - mediapipe.view_cache[mediapipe.view_cache.size()-1].y;
+        }
     }
     
     if(StateManager::getInstance().getState() == 20){
@@ -374,11 +398,19 @@ void ofApp::mousePressed(int x, int y, int button){
     if(StateManager::getInstance().getState() == 40) {
         if(time_passed_since_last < 1) {
             StateManager::getInstance().click_through += 1;
+            
+            if(StateManager::getInstance().click_through > 10) {
+                StateManager::getInstance().setState(50);
+            }
         }
         else if(time_passed_since_last > 5) {
-            StateManager::getInstance().click_through -= 1;
+            StateManager::getInstance().click_through -= 5;
         }
+        StatisticsManager::getInstance().click_throughs++;
+        
     }
+    
+    StatisticsManager::getInstance().clicks++;
 }
 
 //--------------------------------------------------------------

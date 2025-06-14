@@ -38,4 +38,6 @@ class analytics : public ofBaseApp{
         
         int deduced = -1;
         int min_watch_time = 50;
+    
+    
 };

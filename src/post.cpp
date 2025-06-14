@@ -116,6 +116,12 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                 ofTranslate(size/2, size/2, 0);
             }
             if(deleted) {
+                ofSetColor(200, 0, 0);
+                ofPushMatrix();
+                ofRotateDeg(45);
+                ofDrawRectangle(-20, -4, 40, 8);
+                ofDrawRectangle(-4, -20, 8, 40);
+                ofPopMatrix();
                 ofSetColor(255, 255, 255, 30);
                 
             } else {
