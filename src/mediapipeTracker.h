@@ -72,4 +72,7 @@ public:
     glm::vec3 lastScreenCenter, lastScreenNormal, lastScreenRight, lastScreenUp;
     float lastScreenWidth = 0.160f, lastScreenHeight = 0.242f;
     
+    ofVec2f offset;
+    ofVec2f scale;
+    
 };

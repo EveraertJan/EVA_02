@@ -24,7 +24,7 @@ void ofApp::setup(){
     logo.load("icons/logo_black.png");
     
 //    ofEnableDepthTest();
-//    ofEnableNormalizedTexCoords();
+//    ofEnableNormalizedTexCoords();9999123
 
     baseFont.load("arial.ttf", 10);
 
@@ -33,6 +33,10 @@ void ofApp::setup(){
     gui.add(state.setup("state", 0, 0, 3));
     gui.add(history_size.setup("history size", 20, 10, 100));
     gui.add(click_time.setup("time clicking (in frames)", 6, 1, 120));
+    gui.add(offset_x.setup("tracking offset x", 0, -1000, 1000));
+    gui.add(offset_y.setup("tracking offset y", 0, -1000, 1000));
+    gui.add(scale_x.setup("scale x", 1, 0, 3));
+    gui.add(scale_y.setup("scale y", 1, 0, 3));
     bHide = true;
 
     mediapipe.setup();
@@ -87,6 +91,12 @@ void ofApp::reset() {
 
 //--------------------------------------------------------------
 void ofApp::update(){
+    
+    mediapipe.offset.x = offset_x;
+    mediapipe.offset.y = offset_y;
+    mediapipe.scale.x = scale_x;
+    mediapipe.scale.y = scale_y;
+    
     ofBackground(255);
     StateManager::getInstance().state_running++;
     

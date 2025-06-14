@@ -109,7 +109,7 @@ void mediapipeTracker::update(){
                 avg.y += it.y;
                
             }
-            view_guess = ofVec2f(avg.x/view_cache.size(), avg.y / view_cache.size());
+            view_guess = ofVec2f(((avg.x/view_cache.size()) * scale.x)+ offset.x, ((avg.y / view_cache.size()) * scale.y)+ offset.y) ;
             
         } else {
             StateManager::getInstance().setNoPerson( StateManager::getInstance().getNoPerson() + 1 );
@@ -211,20 +211,18 @@ void mediapipeTracker::draw(){
         for(auto & it : view_cache) {
             avg.x += it.x;
             avg.y += it.y;
-            ofSetColor(0, 255, 50);
-            ofNoFill();
-            
             
             int i = round(it.x / rounding) * rounding;
             int j = round(it.y / rounding) * rounding;
             ofFill();
-        
+            
+            ofSetColor(195, 247, 40);
             ofDrawRectangle(50+i+2, 50+j, 1, 5);
             ofDrawRectangle(50+i, 50+j + 2, 5, 1);
                 
         }
         if(StateManager::getInstance().debug) {
-            ofDrawCircle(avg.x/view_cache.size(), avg.y / view_cache.size(), 20);
+            ofDrawCircle(view_guess.x, view_guess.y, 20);
         }
         
         if(StateManager::getInstance().debug) {

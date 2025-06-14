@@ -157,7 +157,7 @@ void analytics::drawEmpathyBold() {
     
     ofRectangle e_frame = empathyFont.getStringBoundingBox("EMPATHY LEFT", x, y);
     ofFill();
-    ofSetColor(195, 247, 40);
+    ofSetColor(100, 247, 40);
     ofDrawRectangle(e_frame.x, e_frame.y, e_frame.getWidth() * StateManager::getInstance().getEmpathy(), e_frame.getHeight());
     ofSetColor(0, 0, 0);
     empathyFont.drawString("EMPATHY LEFT", x, y);

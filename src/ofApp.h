@@ -79,6 +79,10 @@ public:
     ofxIntSlider click_time;
     ofxIntSlider state;
     ofxIntSlider input_source;
+    ofxIntSlider offset_x;
+    ofxIntSlider offset_y;
+    ofxFloatSlider scale_x;
+    ofxFloatSlider scale_y;
     
     
     ofxIntSlider history_size;
