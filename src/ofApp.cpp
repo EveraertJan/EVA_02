@@ -103,6 +103,14 @@ void ofApp::update(){
         StateManager::getInstance().resetNecessary = false;
         reset();
     }
+    
+    
+    if(ofGetFrameNum() % 60 * 10 == 0 && base_posts.size() == 0) {
+        
+        loadFromAPI();
+        reset();
+        OSCManager::getInstance().setup();
+    }
 }
 
 //--------------------------------------------------------------
