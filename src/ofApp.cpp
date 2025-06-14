@@ -26,11 +26,6 @@ void ofApp::setup(){
 
     logo.load("icons/logo_black.png");
     
-//    ofEnableDepthTest();
-//    ofEnableNormalizedTexCoords();9999123
-
-    baseFont.load("arial.ttf", 10);
-
     gui.setup("main"); // most of the time you don't need a name
     gui.add(debug.setup("debug", true));
     gui.add(state.setup("state", 0, 0, 3));
@@ -52,14 +47,16 @@ void ofApp::setup(){
     ack_complete.setup();
     ack_topic_found.setup();
     
-    
     loadFromAPI();
     reset();
-    
     
     OSCManager::getInstance().setup();
     StatisticsManager::getInstance().reset();
     
+    
+#if __linux__
+    StateManager::getInstance().debug = false;
+#endif
 }
 
 //--------------------------------------------------------------
@@ -239,7 +236,7 @@ void ofApp::draw() {
                 if(hovered->topic != StateManager::getInstance().topics[7].name) {
                     StateManager::getInstance().setEmpathy(0.003);
                 } else {
-                    StateManager::getInstance().setEmpathy(-0.01);
+                    StateManager::getInstance().setEmpathy(-0.003);
                     
                 }
             }
@@ -256,22 +253,27 @@ void ofApp::draw() {
 //        }
         
         
-        if(StateManager::getInstance().click_through > 10) {
+        ofDrawBitmapStringHighlight(ofToString(StatisticsManager::getInstance().looking_away), ofVec2f(500, 500));
+        ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().click_through), ofVec2f(500, 520));
+        ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().getEmpathy()), ofVec2f(500, 540));
+        
+        
+        if(StatisticsManager::getInstance().click_throughs >= 10) {
             StatisticsManager::getInstance().reason = "boredom, rapid scrolling";
             ofLog() << "rapid scrolling";
             StateManager::getInstance().setEmpathy(-1);
             StateManager::getInstance().setState(50);
             
         }
-        if( StateManager::getInstance().getEmpathy() < 0.2) {
-            StatisticsManager::getInstance().reason = "distraction, ignoring subject";
-            ofLog() << "look elsewhere";
-            StateManager::getInstance().setState(50);
-        }
-        if( StatisticsManager::getInstance().looking_away > 50) {
+        if( StatisticsManager::getInstance().looking_away > 200) {
             StatisticsManager::getInstance().reason = "distraction, looking away";
-            ofLog() << "looking away";
-            StateManager::getInstance().setEmpathy(-0.1);
+            StateManager::getInstance().setEmpathy(-0.003);
+        }
+        if( StateManager::getInstance().getEmpathy() < 0.2) {
+            if(StatisticsManager::getInstance().looking_away< 200) {
+                StatisticsManager::getInstance().reason = "distraction, ignoring subject";
+            }
+            ofLog() << "look elsewhere";
             StateManager::getInstance().setState(50);
         }
     }
@@ -407,9 +409,8 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 //    mediapipe.calibrate();
-    if(StateManager::getInstance().getState() < 20) {
+    if(StateManager::getInstance().getState() == 40 || StateManager::getInstance().getState() < 20 ) {
         if(mediapipe.view_cache.size() > 0) {
-            offset_x = x - mediapipe.view_cache[mediapipe.view_cache.size()-1].x;
             offset_y = y - mediapipe.view_cache[mediapipe.view_cache.size()-1].y;
         }
     }

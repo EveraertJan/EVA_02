@@ -187,14 +187,7 @@ void mediapipeTracker::draw(){
                 ofPopMatrix();
             }
             
-            if(abs(calib_head_rotation.z) > 0.25) {
-                StatisticsManager::getInstance().looking_away++;
-            } else {
-                StatisticsManager::getInstance().looking_away-=2;
-                if(StatisticsManager::getInstance().looking_away < 0) {
-                    StatisticsManager::getInstance().looking_away = 0;
-                }
-            }
+            
             
             
             tracked = polyTrack(orient.x, orient.y, orient.z, orient.w, EYE_LOOK_LEFT, EYE_LOOK_RIGHT, EYE_LOOK_UP, EYE_LOOK_DOWN, face->getPosition().x, face->getPosition().y, face->getPosition().z);
@@ -208,6 +201,16 @@ void mediapipeTracker::draw(){
             
             
             
+            if(abs(orient.z) > 0.25) {
+                
+                ofDrawBitmapStringHighlight("LOOKING AWAY", ofGetWidth()/2 -50, ofGetHeight()/2);
+                StatisticsManager::getInstance().looking_away++;
+            } else {
+                StatisticsManager::getInstance().looking_away-=2;
+                if(StatisticsManager::getInstance().looking_away < 0) {
+                    StatisticsManager::getInstance().looking_away = 0;
+                }
+            }
             
             view_cache.push_back(tracked);
             while(view_cache.size() > 8) {
