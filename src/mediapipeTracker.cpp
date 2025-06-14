@@ -232,7 +232,7 @@ void mediapipeTracker::draw(){
             ss << "App FPS: " << ofGetFrameRate();
             ss << std::endl << "Video FPS: " << mVideoFps.getFps();
             ss << std::endl << "Face Tracker FPS: " << faceTracker->getFps();
-            ofDrawBitmapStringHighlight(ss.str(), 24, 24 );
+            ofDrawBitmapStringHighlight(ss.str(), 16, 124 );
         }
         
         

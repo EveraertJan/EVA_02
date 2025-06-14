@@ -15,7 +15,7 @@ StateManager& StateManager::getInstance() {
 
 void StateManager::setState(int newState) {
     currentState = newState;
-    
+    state_running = 0;
     ofColor toSend;
     if(newState == 0) {
         toSend.setHex(0xFFFFFF); OSCManager::getInstance().sendColor(toSend);
@@ -56,7 +56,7 @@ void StateManager::setEmpathy(float newempathy) {
     if(newempathy == -1) {
         // reset
         empathy_history.clear();
-        for(int i = 0; i < 20; i++) {
+        for(int i = 0; i < 30; i++) {
             empathy_history.push_back(1);
         }
     }

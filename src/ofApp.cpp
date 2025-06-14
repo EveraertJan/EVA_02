@@ -88,6 +88,7 @@ void ofApp::reset() {
 //--------------------------------------------------------------
 void ofApp::update(){
     ofBackground(255);
+    StateManager::getInstance().state_running++;
     
     consent_transaction.press_time = click_time;
     consent_content.press_time = click_time;
@@ -121,6 +122,7 @@ void ofApp::draw() {
 
     for(int i = 0; i < ofGetWidth(); i+= 100) {
         for(int j = 0; j < ofGetHeight(); j+= 100) {
+            ofSetColor(200);
             ofDrawRectangle(50+i+2, 50+j, 1, 5);
             ofDrawRectangle(50+i, 50+j + 2, 5, 1);
         }
@@ -193,10 +195,12 @@ void ofApp::draw() {
     }
     if(state == 40) {
         // enforce
-        
-        post * hovered = feed.getPostOnTarget(look_at);
-        hovered->focus_time += 1;
-        
+        if(StateManager::getInstance().state_running > 20) {
+            
+            post * hovered = feed.getPostOnTarget(look_at);
+            hovered->focus_time += 1;
+        }
+        analytics_block.drawEmpathyBold();
         feed.draw();
         drawState("40 - ENFORCING");
         
@@ -205,7 +209,7 @@ void ofApp::draw() {
             analytics_block.detect_empathy(&feed.posts, feed.triggered);
             feed.triggered = false;
         }
-        if( StateManager::getInstance().getEmpathy() == 0 || StateManager::getInstance().click_through > 10) {
+        if( StateManager::getInstance().getEmpathy() < 0.2 || StateManager::getInstance().click_through > 10) {
             StateManager::getInstance().setState(50);
         }
     }
@@ -231,7 +235,9 @@ void ofApp::draw() {
     
     if(StateManager::getInstance().debug){
         gui.draw();
-        ofDrawBitmapString(ofToString(ofGetFrameRate()), 20, 80);
+        ofSetColor(0, 255, 0);
+        
+        ofDrawBitmapString(ofToString(ofGetFrameRate()), 20, ofGetHeight() - 20);
     }
     
     if(error.length() > 0) {

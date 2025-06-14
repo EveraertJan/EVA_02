@@ -18,10 +18,12 @@ class analytics : public ofBaseApp{
         void drawTiming();
         void drawWeights();
         void drawEmpathyMeasure();
+        void drawEmpathyBold();
         void drawDatums();
 
         ofTrueTypeFont font;
         ofTrueTypeFont largeFont;
+        ofTrueTypeFont empathyFont;
         ofImage logo;
     
         ofTime startTime;

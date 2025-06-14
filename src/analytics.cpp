@@ -3,6 +3,7 @@
 
 void analytics::setup(){
     font.load("font/mono.ttf", 12);
+    empathyFont.load("font/mono.ttf", 124);
     largeFont.load("font/dots.ttf", 36);
     font.setLetterSpacing(.9);
 
@@ -115,7 +116,7 @@ void analytics::draw(){
   font.drawString("This machine is not to be used by minors or people with disailities. Contact your local administration for more information.", 15, 160);
 
   drawDatums();
-  drawEmpathyMeasure();
+//  drawEmpathyMeasure();
   drawTiming();
   ofPopMatrix();
 }
@@ -146,6 +147,23 @@ void analytics::drawDatums() {
   ofPopMatrix();
 }
 
+void analytics::drawEmpathyBold() {
+    int x = 0;
+    int y = 0;
+    ofPushStyle();
+    ofPushMatrix();
+    ofTranslate(ofGetWidth() - 150, 100);
+    ofRotateDeg(90);
+    
+    ofRectangle e_frame = empathyFont.getStringBoundingBox("EMPATHY LEFT", x, y);
+    ofFill();
+    ofSetColor(195, 247, 40);
+    ofDrawRectangle(e_frame.x, e_frame.y, e_frame.getWidth() * StateManager::getInstance().getEmpathy(), e_frame.getHeight());
+    ofSetColor(0, 0, 0);
+    empathyFont.drawString("EMPATHY LEFT", x, y);
+    ofPopStyle();
+    ofPopMatrix();
+}
 void analytics::drawEmpathyMeasure() {
   ofPushMatrix();
   ofPushStyle();

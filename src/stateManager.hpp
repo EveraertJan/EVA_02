@@ -43,6 +43,8 @@ class StateManager {
     
         bool resetNecessary = false;
     
+        int state_running = 0;
+    
     private:
         StateManager() = default;
         StateManager(const StateManager&) = delete;
