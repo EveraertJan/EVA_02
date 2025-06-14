@@ -27,7 +27,8 @@ void mediapipeTracker::setup(){
 #ifdef __APPLE__
     mGrabber.setup(1280, 720);
 #elif __linux__
-    mGrabber.setup(640, 480);
+    ofLog() << "LINUX SETTINGS";
+    mGrabber.setup(1024, 768);
 
 #endif
 
