@@ -177,7 +177,14 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                 }
             }
             if(state == 20 || state == 40) {
+                ofPushStyle();
+                if(clicked) {
+                    ofSetColor(255, 255, 255, 255);
+                } else {
+                    ofSetColor(255, 255, 255, 50);
+                }
                 like.draw(-like.getWidth()/2, -like.getHeight()/2);
+                ofPopStyle();
             }
         }
         ofPopMatrix();

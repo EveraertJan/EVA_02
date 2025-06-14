@@ -33,5 +33,7 @@ void StatisticsManager::reset(){
     empathy_history.clear();
     click_throughs = 0;
     clicks = 0;
+    reason = "";
+    looking_away = 0;
     
 }

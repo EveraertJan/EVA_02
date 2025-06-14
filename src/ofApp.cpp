@@ -58,6 +58,7 @@ void ofApp::setup(){
     
     
     OSCManager::getInstance().setup();
+    StatisticsManager::getInstance().reset();
     
 }
 
@@ -107,11 +108,21 @@ void ofApp::update(){
     ofBackground(255);
     StateManager::getInstance().state_running++;
     
-    consent_transaction.press_time = click_time;
-    consent_content.press_time = click_time;
-    ack_complete.press_time = click_time;
-    ack_topic_found.press_time = click_time;
     
+    int state = StateManager::getInstance().getState();
+    if(state == 10) {
+        consent_transaction.press_time = click_time;
+    }
+    if(state == 11) {
+        consent_content.press_time = click_time;
+    }
+    if(state  == 50){
+    ack_complete.press_time = click_time;
+    }
+    if(state == 30) {
+        ack_topic_found.press_time = click_time;
+    }
+
     analytics_block.update();
     feed.update();
     mediapipe.update();
@@ -206,11 +217,14 @@ void ofApp::draw() {
         ofSetColor(0);
         ofFill();
         drawState("30 - OPTIMISING");
-        if(ack_topic_found.accepted == 1) {
-            StateManager::getInstance().setState(40);
-        }
-        if(ack_topic_found.accepted == 0) {
-            reset();
+        
+        if(StateManager::getInstance().state_running > 60) {
+            if(ack_topic_found.accepted == 1) {
+                StateManager::getInstance().setState(40);
+            }
+            if(ack_topic_found.accepted == 0) {
+                reset();
+            }
         }
         
     }
@@ -243,10 +257,21 @@ void ofApp::draw() {
         
         
         if(StateManager::getInstance().click_through > 10) {
+            StatisticsManager::getInstance().reason = "boredom, rapid scrolling";
+            ofLog() << "rapid scrolling";
+            StateManager::getInstance().setEmpathy(-1);
             StateManager::getInstance().setState(50);
             
         }
         if( StateManager::getInstance().getEmpathy() < 0.2) {
+            StatisticsManager::getInstance().reason = "distraction, ignoring subject";
+            ofLog() << "look elsewhere";
+            StateManager::getInstance().setState(50);
+        }
+        if( StatisticsManager::getInstance().looking_away > 50) {
+            StatisticsManager::getInstance().reason = "distraction, looking away";
+            ofLog() << "looking away";
+            StateManager::getInstance().setEmpathy(-0.1);
             StateManager::getInstance().setState(50);
         }
     }
@@ -255,15 +280,20 @@ void ofApp::draw() {
         ofSetColor(255);
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
         
+        
+        
+        
+        
+        
         if(StateManager::getInstance().state_running > 40) {
             drawState("50 - REWARD");
             
             stringstream ss;
-            ss << std::endl << "The system detected lowered empathy, often in the form of";
-            ss << std::endl << "rapid scrolling or ignoring the subject images. This concludes the transaction." << endl;
-            ss << std::endl << "Find your reward in the coin slide." << endl;
-            ss << std::endl << "Clicks: " + ofToString(StatisticsManager::getInstance().clicks);
-            ss << std::endl << "Rapid scrolling instances: " + ofToString(StatisticsManager::getInstance().click_throughs) + " times";
+            ss << std::endl << "The system detected signs of lowered empathy, in the form of:" << "// // ";
+            ss << std::endl << StatisticsManager::getInstance().reason << " // // ";
+            ss << std::endl << "Find your reward in the coin slide."  << "//";
+            ss << std::endl << "Clicks: "  << ofToString(StatisticsManager::getInstance().clicks)  << " //" ;
+            ss << std::endl << "Rapid scrolling instances: " <<  ofToString(StatisticsManager::getInstance().click_throughs) << " times";
             
             ack_complete.draw("TRANSACTION", "COMPLETE", ss.str(), "", "Restart");
             if(ack_complete.accepted == 0) {
@@ -388,7 +418,6 @@ void ofApp::mousePressed(int x, int y, int button){
         
         post * clicked = feed.getPostOnTarget(ofVec2f(x, y));
         if(clicked->post_id != -1) {
-            std::cout << "topic clicked" << StateManager::getInstance().topics[clicked->topic_id].handle << endl;
             clicked->clicked += 1;
         }
     }

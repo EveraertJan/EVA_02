@@ -1,5 +1,6 @@
 #include "mediapipeTracker.h"
 #include "stateManager.hpp"
+#include "statisticsManager.hpp"
 
 // setting this to avoid typing ofx::MediaPipe::HandTracker
 // now we can just use HandTracker
@@ -185,6 +186,16 @@ void mediapipeTracker::draw(){
                 ofDrawBitmapStringHighlight(ss.str(), 10, 10 );
                 ofPopMatrix();
             }
+            
+            if(abs(calib_head_rotation.z) > 0.25) {
+                StatisticsManager::getInstance().looking_away++;
+            } else {
+                StatisticsManager::getInstance().looking_away-=2;
+                if(StatisticsManager::getInstance().looking_away < 0) {
+                    StatisticsManager::getInstance().looking_away = 0;
+                }
+            }
+            
             
             tracked = polyTrack(orient.x, orient.y, orient.z, orient.w, EYE_LOOK_LEFT, EYE_LOOK_RIGHT, EYE_LOOK_UP, EYE_LOOK_DOWN, face->getPosition().x, face->getPosition().y, face->getPosition().z);
             

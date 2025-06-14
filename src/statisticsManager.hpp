@@ -23,6 +23,8 @@ class StatisticsManager {
         std::vector<double> empathy_history;
         int click_throughs;
         int clicks;
+        std::string reason;
+        int looking_away;
     private:
         StatisticsManager() = default;
         StatisticsManager(const StatisticsManager&) = delete;
