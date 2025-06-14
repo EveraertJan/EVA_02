@@ -158,16 +158,16 @@ void analytics::drawEmpathyBold() {
     int y = 0;
     ofPushStyle();
     ofPushMatrix();
-    ofTranslate(ofGetWidth() - 180, 200);
+    ofTranslate(ofGetWidth() - 180, 100);
     
     ofRotateDeg(90);
     
-    ofRectangle e_frame = empathyFont.getStringBoundingBox("EMPATHY LEFT", x, y);
+    ofRectangle e_frame = empathyFont.getStringBoundingBox("EMPATHY MEASURE", x, y);
     ofFill();
     ofSetColor(195, 247, 40);
     ofDrawRectangle(e_frame.x, e_frame.y, e_frame.getWidth() * ofMap(StateManager::getInstance().getEmpathy(), 0.2, 1, 0, 1), e_frame.getHeight());
     ofSetColor(0, 0, 0);
-    empathyFont.drawString("EMPATHY LEFT", x, y);
+    empathyFont.drawString("EMPATHY MEASURE", x, y);
     ofPopStyle();
     ofPopMatrix();
 }

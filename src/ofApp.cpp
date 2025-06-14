@@ -266,7 +266,7 @@ void ofApp::draw() {
             
         }
         if( StatisticsManager::getInstance().looking_away > 200) {
-            StatisticsManager::getInstance().reason = "distraction, looking away";
+            StatisticsManager::getInstance().reason = "looking away";
             StateManager::getInstance().setEmpathy(-0.003);
         }
         if( StateManager::getInstance().getEmpathy() < 0.2) {
@@ -435,12 +435,14 @@ void ofApp::mousePressed(int x, int y, int button){
         }
         else if(time_passed_since_last > 5) {
             StateManager::getInstance().click_through -= 5;
+            StatisticsManager::getInstance().click_throughs -= 5;
         }
         StatisticsManager::getInstance().click_throughs++;
         
     }
-    
-    StatisticsManager::getInstance().clicks++;
+    if(StateManager::getInstance().getState() < 50 ) {
+        StatisticsManager::getInstance().clicks++;
+    }
 }
 
 //--------------------------------------------------------------
