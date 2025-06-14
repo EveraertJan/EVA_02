@@ -199,7 +199,7 @@ void mediapipeTracker::draw(){
             
             
             view_cache.push_back(tracked);
-            while(view_cache.size() > 20) {
+            while(view_cache.size() > 8) {
                 view_cache.erase(view_cache.begin());
             }
         }
