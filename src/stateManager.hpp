@@ -21,6 +21,9 @@ class StateManager {
         void setDeduced(int newDeduced);
         int getDeduced() const;
     
+        void setNoPerson(int newNoPerson);
+        int getNoPerson() const;
+    
         void reset_topic_focus();
     
         struct Topic {
@@ -48,4 +51,6 @@ class StateManager {
         int deduced = 0;
         
         vector<float> empathy_history;
+    
+        int no_person;
 };

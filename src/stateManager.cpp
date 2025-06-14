@@ -73,6 +73,18 @@ float StateManager::getEmpathy() const {
     return tot / empathy_history.size();
 }
 
+void StateManager::setNoPerson(int newNoPerson) {
+    no_person = newNoPerson;
+    if(no_person > ofGetFrameRate() * 5) {
+        currentState = 0;
+    }
+}
+int StateManager::getNoPerson() const {
+    return no_person;
+}
+
+
+
 void StateManager::reset_topic_focus() {
     for(int i= 0; i < topics.size(); i++) {
         topics[i].focus_time = 0;

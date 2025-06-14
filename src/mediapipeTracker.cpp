@@ -103,6 +103,8 @@ void mediapipeTracker::update(){
             
             view_guess = tracked;
             
+        } else {
+            StateManager::getInstance().setNoPerson( StateManager::getInstance().getNoPerson() + 1 );
         }
     }
     
