@@ -4,4 +4,5 @@ ofxGui
 ofxMediaPipePython
 ofxOpenCv
 ofxOsc
+ofxSvg
 ofxVectorGraphics

@@ -17,10 +17,12 @@ void ofApp::setup(){
     
     
     ofSetVerticalSync(true);
+    
     ofSetFrameRate(30);
 
-    logo.load("icons/logo_black.png");
     
+//    logo.load("icons/logo_black.png");
+    logo.load("icons/tiger.svg");
     gui.setup("main"); // most of the time you don't need a name
     gui.add(debug.setup("debug", true));
     gui.add(state.setup("state", 0, 0, 3));
@@ -160,9 +162,24 @@ void ofApp::draw() {
     noiseField();
     if(state == 0) {
         // idle
-        int s = 700;
-        ofSetColor(255);
-        logo.draw(ofGetWidth()/2 - s/2 + (s/20), ofGetHeight()/2-s*0.9, s, s * 0.9);
+        ofRectangle bounds;
+        for (int i = 0; i < logo.getNumPath(); ++i) {
+            logo.getPathAt(i).setPolyWindingMode(OF_POLY_WINDING_ODD);
+        }
+        
+        int s = 980;
+        ofLog() << logo.getWidth();
+        float sc = logo.getWidth() / s;
+        ofSetColor(StyleManager::getInstance().green);
+        ofFill();
+        ofPushMatrix();
+        
+        
+        ofTranslate(ofGetWidth()/2 - s/2 + 50, ofGetHeight()/2-(s*0.9)/2);
+        ofScale(2);
+        logo.draw();
+        ofPopMatrix();
+        
         drawState("AWAITING INTERACTION");
         if(StateManager::getInstance().newPerson) {
             ofLog() << "spotted new person";

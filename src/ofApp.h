@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxCvHaarFinder.h"
+#include "ofxSvg.h"
 #include "ofxGui.h"
 #include "analytics.h"
 #include "ephemeral_feed.h"
@@ -38,6 +39,7 @@ public:
     
     
     ofImage img;
+    
     ofxCvHaarFinder eye_finder;
     ofxCvHaarFinder face_finder;
     ofxCvGrayscaleImage grayImg;
@@ -59,7 +61,8 @@ public:
     std::vector<int> w_avgs;
     std::vector<int> h_avgs;
     
-    ofImage logo;
+    
+    ofxSvg logo;
     
     ofVec2f look_at;
     
