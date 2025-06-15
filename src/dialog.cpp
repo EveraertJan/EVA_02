@@ -24,12 +24,12 @@ void dialog::draw(string question, string highlight,  string subtext, string agr
     } else {
         ofSetColor(StyleManager::getInstance().green);
     }
-    ofDrawRectangle(-700, -450, 1400, 860);
+    ofDrawRectangle(-1380/2, -450, 1380, 860);
     ofTranslate(-180, -400);
     ofSetColor(0);
     drawHighlightedText(question, "SELL", 80, 600, StyleManager::getInstance().bold_font);
     ofSetColor(255);
-    StyleManager::getInstance().large_font.drawString(highlight, -300, 180);
+    StyleManager::getInstance().large_font.drawString(highlight, -300, 160);
     ofSetColor(0);
     drawHighlightedText(subtext, "", 300, 600, StyleManager::getInstance().mid_font);
     

@@ -9,7 +9,6 @@ void ephemeral_feed::setup(){
   font.setLetterSpacing(.9);
   largeFont.load("font/dots.ttf", 24);
 
-  logo.load("icons/logo_black.png");
 
   zoom = 1;
 
@@ -102,7 +101,6 @@ void ephemeral_feed::update(){
     }
 }
 void ephemeral_feed::draw(){
-    ofDisableArbTex(); // optional depending on usage
     int state = StateManager::getInstance().getState();
     ofPushMatrix();
     visible_posts.clear();
@@ -130,15 +128,6 @@ void ephemeral_feed::draw(){
     if(state > 30) {
         comment_module.draw();
     }
-    ofPushMatrix();
-    ofTranslate(ofGetWidth() - 50, 50);
-    ofSetColor(0);
-    ofRectangle r = largeFont.getStringBoundingBox("ANALYSING", 0, 0);
-    ofDrawRectangle(r.x - r.width, r.y + r.height, r.width, r.height);
-    ofSetColor(255);
-    largeFont.drawString("ANALYSING", -r.width, r.height);
-    ofPopMatrix();
-    ofEnableArbTex(); // optional depending on usage
 
 }
 

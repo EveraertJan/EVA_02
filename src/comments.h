@@ -14,7 +14,6 @@ class comments : public ofBaseApp{
 
         ofTrueTypeFont font;
         ofTrueTypeFont largeFont;
-        ofImage logo;
 
         vector<string> comments_arr;
         vector<string> visible_comments_arr;

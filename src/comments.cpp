@@ -23,7 +23,6 @@ vector<string> wrapTextCenter(string text, float setWidth, ofTrueTypeFont &font)
 void comments::setup(){
   font.load("font/mono.ttf", 52);
   largeFont.load("font/dots.ttf", 36);
-  logo.load("icons/logo_simple_white.png");
 
   loadComments();
 }
@@ -39,10 +38,6 @@ void comments::draw(){
     int spacing = 4;
     int line_spacing = 36;
 
-    ofPushMatrix();
-    ofTranslate(50, 150);
-    logo.draw(20, 0, 100, 100);
-    ofPopMatrix();
     ofPushMatrix();
     ofTranslate(100, 100);
     ofSetColor(0);

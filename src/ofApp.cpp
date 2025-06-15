@@ -255,12 +255,6 @@ void ofApp::draw() {
         
         analytics_block.drawEmpathyBold();
         
-//        if(ofGetFrameNum() % 30) {
-//            analytics_block.detect_empathy(&feed.posts, feed.triggered);
-//            feed.triggered = false;
-//        }
-        
-        
         ofDrawBitmapStringHighlight(ofToString(StatisticsManager::getInstance().looking_away), ofVec2f(ofGetWidth()-40, ofGetHeight()-50));
         ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().click_through), ofVec2f(ofGetWidth()-40, ofGetHeight()-70));
         ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().getEmpathy()), ofVec2f(ofGetWidth()-40, ofGetHeight()-90));
@@ -312,14 +306,14 @@ void ofApp::draw() {
         p.setColor(ofColor(255));
         p.moveTo(0, 0);
         for(int i = 0; i < history.size(); i++) {
-            double x = ofMap(i, 0, history.size(), 0, 450);
-            double y = ofMap(history[i], 0, 1, 600, 0);
+            double x = ofMap(i, 0, history.size(), 0, 420);
+            double y = ofMap(history[i], 0, 1, 650, 0);
             p.lineTo(x, y);
         }
         p.setStrokeWidth(4.);
-        ofTranslate(ofGetWidth() / 2 + 100, ofGetHeight()/2 - 200);
+        ofTranslate(ofGetWidth() / 2 + 100, ofGetHeight()/2 - 260);
         p.draw();
-        StyleManager::getInstance().mid_font.drawString("Empathy measurement", 40, -20);
+        StyleManager::getInstance().mid_font.drawString("Empathy measurement", 20, -20);
         ofPopStyle();
         ofPopMatrix();
         
