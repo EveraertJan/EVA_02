@@ -293,9 +293,11 @@ void ofApp::draw() {
             if(ack_complete.accepted == 1) {
                 reset();
             }
-            ofColor toSend;
-            toSend.setHex(0x00FF10); OSCManager::getInstance().sendColor(toSend);
-
+            
+            if(StateManager::getInstance().state_running  < 100) {
+                ofColor toSend;
+                toSend.setHex(0x00FF10); OSCManager::getInstance().sendColor(toSend);
+            }
         }
         
         
