@@ -117,9 +117,9 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                         scale = 2;
                     }
                     ofScale(scale);
-                    if(StateManager::getInstance().debug) {
+//                    if(StateManager::getInstance().debug) {
                         ofDrawRectangle(-mask_rect.width/2, -mask_rect.height/2, mask_rect.width, mask_rect.height);
-                    }
+//                    }
                     
                     ofPopStyle();
                     ofFill();
@@ -166,7 +166,9 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                 if(state == 20 && StateManager::getInstance().state_running < 10) {
                     StyleManager::getInstance().drawStringHighlight("Click to like the post", 0, 50, StyleManager::getInstance().mid_font, true);
                 }
-                StyleManager::getInstance().drawStringHighlight(ofToString(time_watched), -size/2 + 20, -size/2 + 32, StyleManager::getInstance().debug_font, false);
+                if(state == 20) {
+                    StyleManager::getInstance().drawStringHighlight(ofToString(time_watched), -size/2 + 20, -size/2 + 32, StyleManager::getInstance().debug_font, false);
+                }
 
             }
         }

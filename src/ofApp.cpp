@@ -186,7 +186,7 @@ void ofApp::draw() {
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
 
         drawState("INFORMING CONSENT");
-        consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "Do you agree to be exposed to content that is extreme/explicit? // // The images show may cause triggers for some viewers. ", "Yes", "No");
+        consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "Do you agree to be exposed to content that is extreme or explicit in nature? // // The images show may cause triggers for some viewers. ", "Yes", "No");
         if(consent_content.accepted == 1) {
             StateManager::getInstance().setState(20);
         } else if(consent_content.accepted == 0) {
@@ -214,7 +214,7 @@ void ofApp::draw() {
         feed.draw();
         std::string top = StateManager::getInstance().topics[StateManager::getInstance().getDeduced()].handle;
         ofSetColor(255);
-        ack_topic_found.draw("TOPIC DEDUCED", top, "Press continue to reduce empathy. // // We will use  techniques known to cause empathy fatigue // to achieve this. // Aborting will seize paiment", "Continue", "Abort");
+        ack_topic_found.draw("TOPIC DEDUCED", top, "Press continue to reduce empathy. // // We will use  techniques known to cause empathy fatigue to achieve apathy. // Pressing 'abort', or walking away will seize paiment", "Continue", "Abort");
         ofSetColor(0);
         ofFill();
         drawState("OPTIMISING");
@@ -291,11 +291,11 @@ void ofApp::draw() {
             drawState("REWARD");
             
             stringstream ss;
-            ss << std::endl << "The system detected signs of lowered empathy, in the form of:" << "// // ";
+            ss << std::endl << "The system detected signs of lowered empathy, in the form of:" << " // // ";
             ss << std::endl << StatisticsManager::getInstance().reason << " // // ";
-            ss << std::endl << "Find your reward in the coin slide."  << "//";
-            ss << std::endl << "Clicks: "  << ofToString(StatisticsManager::getInstance().clicks)  << " //" ;
-            ss << std::endl << "Rapid scrolling instances: " <<  ofToString(StateManager::getInstance().click_through) << " times";
+            ss << std::endl << "Find your reward in the coin slide."  << " //";
+//            ss << std::endl << "Clicks: "  << ofToString(StatisticsManager::getInstance().clicks)  << " //" ;
+//            ss << std::endl << "Rapid scrolling instances: " <<  ofToString(StateManager::getInstance().click_through) << " times";
             
             ack_complete.draw("", "COMPLETE", ss.str(), "", "Restart");
             if(ack_complete.accepted == 0) {
@@ -305,12 +305,11 @@ void ofApp::draw() {
         std::vector<double> history = StatisticsManager::getInstance().empathy_history;
         ofPushStyle();
         ofSetColor(255);
-        ofSetLineWidth(80);
         
         ofPath p;
         p.setFilled(false);
         p.setStrokeColor(ofColor( 60 ));
-        p.setStrokeWidth(20);
+        p.setStrokeWidth(5);
         p.setColor(ofColor(255));
         double lastY = ofGetHeight()/2 - 200;
         double lastX =  ofGetWidth() / 2 - 300;
@@ -326,7 +325,7 @@ void ofApp::draw() {
         }
         p.setStrokeWidth(8.);
         p.draw();
-        StyleManager::getInstance().base_font.drawString("Empathy measurement", ofGetWidth() / 2 - 300, ofGetHeight()/2 - 210);
+        StyleManager::getInstance().mid_font.drawString("Empathy measurement", ofGetWidth() / 2 - 300, ofGetHeight()/2 - 210);
         ofPopStyle();
     }
     
