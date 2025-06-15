@@ -7,6 +7,9 @@
 
 #include "dialog.hpp"
 #include "stateManager.hpp"
+#include "styleManager.hpp"
+
+
 void dialog::setup() {
     
     font.load("font/mono2.ttf", 16);
@@ -20,7 +23,7 @@ void dialog::update() {
 void dialog::draw(string question, string highlight,  string subtext, string agree, string decline) {
     ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2-240);
-    ofSetColor(195, 247, 40);
+    ofSetColor(StyleManager::getInstance().green);
     ofDrawRectangle(-320, 0, 640, 600);
     ofSetColor(0);
     drawHighlightedText(question, "SELL", 80, 600, mono_bold);

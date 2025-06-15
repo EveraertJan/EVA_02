@@ -2,6 +2,7 @@
 #include "stateManager.hpp"
 #include "OSCManager.h"
 #include "statisticsManager.hpp"
+#include "styleManager.hpp"
 
 
 //ED217C
@@ -30,7 +31,7 @@ void ofApp::setup(){
     gui.add(debug.setup("debug", true));
     gui.add(state.setup("state", 0, 0, 3));
     gui.add(history_size.setup("history size", 20, 10, 100));
-    gui.add(click_time.setup("time clicking (in frames)", 6, 1, 120));
+    gui.add(click_time.setup("time clicking (in frames)", 3, 1, 120));
     gui.add(offset_x.setup("tracking offset x", 0, -1000, 1000));
     gui.add(offset_y.setup("tracking offset y", 0, -1000, 1000));
     gui.add(scale_x.setup("scale x", 1, 0, 3));
@@ -298,12 +299,16 @@ void ofApp::draw() {
             }
         }
         std::vector<double> history = StatisticsManager::getInstance().empathy_history;
+        ofBeginShape();
         for(int i = 0; i < history.size(); i++) {
             double y = ofMap(history[i], 0, 1, 0, 100);
             double x = ofMap(i, 0, history.size(), 0, 600);
             ofSetColor(255);
-            ofDrawRectangle(ofGetWidth() / 2 + x - 300, ofGetHeight()/2 - 100 - y, 1, 1);
+//            ofDrawRectangle(ofGetWidth() / 2 + x - 300, ofGetHeight()/2 - 100 - y, 1, 1);
+            ofVertex(ofGetWidth() / 2 + x - 300, ofGetHeight()/2 - 100 - y);
         }
+        ofEndShape();
+        ofDrawBitmapString("Empathy measurement", ofGetWidth() / 2 - 300, ofGetHeight()/2 - 210);
     }
     
     if(state == 10) {
@@ -316,7 +321,7 @@ void ofApp::draw() {
     
     if(StateManager::getInstance().debug){
         gui.draw();
-        ofSetColor(0, 255, 0);
+        ofSetColor(StyleManager::getInstance().green);
         
         ofDrawBitmapString(ofToString(ofGetFrameRate()), 20, ofGetHeight() - 20);
     }
@@ -348,15 +353,15 @@ void ofApp::noiseField() {
       float cur = (ofSignedNoise(i * 0.001, j * 0.001, 500 + ofGetFrameNum() * 0.004) + 1)/2;
         
         if( cur > 0.75 && cur < 0.8 ) {
-         ofSetColor(0, 0, 248);
-         ofFill();
-         ofDrawRectangle(i-2, j-2, 4, 4);
+            ofSetColor(StyleManager::getInstance().blue);
+            ofFill();
+            ofDrawRectangle(i-2, j-2, 4, 4);
        } else if(cur  > 0.7 && cur < 0.75) {
-        ofSetColor(194, 253, 80);
-        ofNoFill();
-        ofDrawCircle(i, j, 10);
-        ofFill();
-        ofDrawCircle(i, j, 4);
+            ofSetColor(StyleManager::getInstance().green);
+            ofNoFill();
+            ofDrawCircle(i, j, 10);
+            ofFill();
+            ofDrawCircle(i, j, 4);
            
       }
     }
@@ -411,11 +416,11 @@ void ofApp::mouseDragged(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
 //    mediapipe.calibrate();
-    if(StateManager::getInstance().getState() == 40 || StateManager::getInstance().getState() < 20 ) {
-        if(mediapipe.view_cache.size() > 0) {
-            offset_y = y - mediapipe.view_cache[mediapipe.view_cache.size()-1].y;
-        }
-    }
+//    if(StateManager::getInstance().getState() == 40 || StateManager::getInstance().getState() < 20 ) {
+//        if(mediapipe.view_cache.size() > 0) {
+//            offset_y = y - mediapipe.view_cache[mediapipe.view_cache.size()-1].y;
+//        }
+//    }
     
     if(StateManager::getInstance().getState() == 20){
         

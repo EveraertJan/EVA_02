@@ -1,5 +1,6 @@
 #include "post.h"
 #include "stateManager.hpp"
+#include "styleManager.hpp"
 
 void post::setup(string path, string t, int id, string mask_path, int r, string mask_d){
     img.load(path);
@@ -81,42 +82,13 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
            ) {
             
             ofTranslate(x_offset, y_offset, z_offset);
-            //    ofDisableAntiAliasing();
-
-            
-            if(colorByTopic) {
-                ofSetColor(100, 255, 0);
-                if(topic == "46bsu1y0mhfvg8g") { // flooding
-                    ofSetColor(0, 125, 255);
-                }
-                if(topic == "20gaoy5np982eaz") { // societal divide
-                    ofSetColor(255, 0, 255);
-                }
-                if(topic == "u67379k9vu56d8n") { // climate
-                    ofSetColor(0, 255, 0);
-                }
-                if(topic == "2xia5v5pg0tv3b8") { // poverty
-                    ofSetColor(255, 150, 0);
-                }
-                if(topic == "5eofxxi10os7y64") { // migration
-                    ofSetColor(125, 255, 125);
-                }
-                if(topic == "8tf81lyz0wf95g7") { // pollution
-                    ofSetColor(0, 125, 255);
-                }
-                if(topic == "828w2zrrs1bgv36") { // war
-                    ofSetColor(255, 0, 0);
-                }
-            } else {
-                ofSetColor(255,255,255);
-            }
             
             
             if(state == 20) {
                 ofTranslate(size/2, size/2, 0);
             }
             if(deleted) {
-                ofSetColor(200, 0, 0);
+                ofSetColor(StyleManager::getInstance().red);
                 ofPushMatrix();
                 ofRotateDeg(45);
                 ofDrawRectangle(-20, -4, 40, 8);
@@ -137,6 +109,7 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                     img.getTexture().setAlphaMask(mask.getTexture());
                     ofPushStyle();
                     ofSetColor(200, 0, 0);
+                    ofSetColor(StyleManager::getInstance().red);
                     ofNoFill();
                     float scale = (500*500)/(mask_rect.width * mask_rect.height);
                     if(scale > 2) {
@@ -179,7 +152,7 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
             if(state == 20 || state == 40) {
                 ofPushStyle();
                 if(clicked) {
-                    ofSetColor(255, 255, 255, 255);
+                    ofSetColor(StyleManager::getInstance().green);
                 } else {
                     ofSetColor(255, 255, 255, 50);
                 }

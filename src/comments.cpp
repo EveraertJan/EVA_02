@@ -1,5 +1,5 @@
 #include "comments.h"
-
+#include "styleManager.hpp"
 
 vector<string> wrapTextCenter(string text, float setWidth, ofTrueTypeFont &font) {
     vector<string> lines;
@@ -50,9 +50,11 @@ void comments::draw(){
     float y = 0;
     for (const auto &line : wrapTextCenter(visible_comments_arr[0], ofGetWidth() * 0.45, font)) {
         ofRectangle r = font.getStringBoundingBox(line, 0, y);
-        ofColor blue;
-        blue.setHex(0x3FA7D6);
-        ofSetColor(blue);
+//        ofColor blue;
+//        blue.setHex(0x3FA7D6);
+//        ofSetColor(blue);
+        
+        ofSetColor(StyleManager::getInstance().blue);
         ofDrawRectangle(r.x, r.y+10, r.width, 50);
         ofSetColor(0);
         font.drawString(line, 0, y);

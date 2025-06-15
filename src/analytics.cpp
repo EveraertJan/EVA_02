@@ -1,5 +1,7 @@
 #include "analytics.h"
 #include "stateManager.hpp"
+#include "styleManager.hpp"
+
 
 void analytics::setup(){
     font.load("font/mono.ttf", 12);
@@ -131,7 +133,8 @@ void analytics::draw(){
 void analytics::drawDatums() {
   ofPushMatrix();
   ofTranslate(ofGetWidth() -50-200+2, 26);
-  ofSetColor(150);
+  ofSetColor(50);
+//    ofSetColor(StyleManager::getInstance().green);
   font.drawString("ID", 0,0);
 
   
@@ -164,7 +167,7 @@ void analytics::drawEmpathyBold() {
     
     ofRectangle e_frame = empathyFont.getStringBoundingBox("EMPATHY MEASURE", x, y);
     ofFill();
-    ofSetColor(195, 247, 40);
+    ofSetColor(StyleManager::getInstance().green);
     ofDrawRectangle(e_frame.x, e_frame.y, e_frame.getWidth() * ofMap(StateManager::getInstance().getEmpathy(), 0.2, 1, 0, 1), e_frame.getHeight());
     ofSetColor(0, 0, 0);
     empathyFont.drawString("EMPATHY MEASURE", x, y);

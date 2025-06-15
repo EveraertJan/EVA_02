@@ -1,6 +1,7 @@
 #include "mediapipeTracker.h"
 #include "stateManager.hpp"
 #include "statisticsManager.hpp"
+#include "styleManager.hpp"
 
 // setting this to avoid typing ofx::MediaPipe::HandTracker
 // now we can just use HandTracker
@@ -218,7 +219,7 @@ void mediapipeTracker::draw(){
             int j = round(it.y / rounding) * rounding;
             ofFill();
             
-            ofSetColor(195, 247, 40);
+            ofSetColor(StyleManager::getInstance().green);
             
             ofDrawRectangle(i+4, j, 2, 10);
             ofDrawRectangle(i, j + 4, 10, 2);
