@@ -13,7 +13,7 @@ int main( ){
 #elif __linux__
     settings.setSize(1200, 1920);
     settings.windowMode = OF_FULLSCREEN; //can also be 
-
+    
 #endif
 
 	auto window = ofCreateWindow(settings);

@@ -18,7 +18,7 @@ void ofApp::setup(){
     
     
     ofSetVerticalSync(true);
-    ofSetFrameRate(60);
+    ofSetFrameRate(30);
     mono_bold.load("font/inputmono.ttf", 12);
     font.load("font/mono2.ttf", 12);
     font.setLetterSpacing(.9);
@@ -62,8 +62,6 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::reset() {
     StatisticsManager::getInstance().reset();
-    
-    OSCManager::getInstance().setup();
     
     StateManager::getInstance().setState(0);
     StateManager::getInstance().setEmpathy(1);
@@ -161,6 +159,7 @@ void ofApp::draw() {
         logo.draw(ofGetWidth()/2 - s/2 + (s/20), ofGetHeight()/2-s*0.9, s, s * 0.9);
         drawState("00 - AWAITING INTERACTION");
         if(StateManager::getInstance().newPerson) {
+            ofLog() << "spotted new person";
             StateManager::getInstance().setState(10);
         }
     }
