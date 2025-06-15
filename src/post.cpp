@@ -151,10 +151,21 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
             }
             if(state == 20 || state == 40) {
                 ofPushStyle();
+                
+                    if(StateManager::getInstance().state_running < 100 && StateManager::getInstance().getState() == 20) {
+                        ofDrawBitmapStringHighlight("Click to like the post", -80, 0);
+//                        ofRectangle textbox = mono_bold.getStringBoundingBox("Click to like this post", 0, 0);
+//                        ofSetColor(0);
+//                        ofFill();
+//                        ofDrawRectangle(textbox);
+//                        ofSetColor(255);
+//                        mono_bold.drawString("Click to like this post", 0, 0);
+                    }
                 if(clicked) {
                     ofSetColor(StyleManager::getInstance().green);
                 } else {
                     ofSetColor(255, 255, 255, 50);
+                    
                 }
                 like.draw(-like.getWidth()/2, -like.getHeight()/2);
                 ofPopStyle();
