@@ -52,6 +52,7 @@ void ofApp::setup(){
     StyleManager::getInstance().base_font.load("font/mono2.ttf", 16);
     StyleManager::getInstance().base_font.setLetterSpacing(1.05);
     StyleManager::getInstance().mid_font.load("font/mono2.ttf", 20);
+    StyleManager::getInstance().mid_font.setLineHeight(28);
     StyleManager::getInstance().large_font.load("font/inputmono.ttf", 68);
     StyleManager::getInstance().bold_font.load("font/inputmono.ttf", 24);
     StyleManager::getInstance().debug_font.load("font/inputmono.ttf", 12);
@@ -173,7 +174,10 @@ void ofApp::draw() {
         ofSetColor(255);
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
         drawState("INFORMING CONSENT");
-        consent_transaction.draw("DO YOU WANT TO SELL YOUR", "EMPATHY", "This machine will emploi techniques known to cause empathy fatigue, reducing your empathy for a subject. // // The subject is chosen algorithmically. // // In exchange, you will receive money.", "Yes", "No");
+        stringstream ss;
+        ss << std::endl << "If you agree, the Empathy Vending Aid (EVA) will buy a fraction of your empathy. By mimicking social media algorithms, the installation identifies what you care about and diminishes your emotional engagment. " << " // // ";
+        ss << std::endl << "You will receive money, but care less about the chosen subject.";
+        consent_transaction.draw("DO YOU WANT TO SELL YOUR", "EMPATHY", ss.str(), "Yes", "No");
         if(consent_transaction.accepted == 1) {
             StateManager::getInstance().setState(11);
         } else if(consent_transaction.accepted == 0) {
@@ -186,7 +190,7 @@ void ofApp::draw() {
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
 
         drawState("INFORMING CONSENT");
-        consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "Do you agree to be exposed to content that is extreme or explicit in nature? // // The images show may cause triggers for some viewers. ", "Yes", "No");
+        consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "Do you agree to be exposed to content that is extreme or explicit in nature? // // The images show may be triggering to some viewers. ", "Yes", "No");
         if(consent_content.accepted == 1) {
             StateManager::getInstance().setState(20);
         } else if(consent_content.accepted == 0) {
@@ -238,7 +242,7 @@ void ofApp::draw() {
             hovered->focused = true;
             if(hovered->post_id != -1) {
                 if(hovered->topic != StateManager::getInstance().topics[7].name) {
-                    StateManager::getInstance().setEmpathy(0.003);
+//                    StateManager::getInstance().setEmpathy(0.003);
                 } else {
                     StateManager::getInstance().setEmpathy(-0.003);
                     

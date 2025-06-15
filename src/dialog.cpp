@@ -42,7 +42,7 @@ void dialog::draw(string question, string highlight,  string subtext, string agr
     ofPopMatrix();
     
     
-    if(StateManager::getInstance().state_running > 30) {
+    if(StateManager::getInstance().state_running > 10) {
         if(ofGetMousePressed()) {
             accepted_touched += 1;
             if(accepted_touched >= press_time){
