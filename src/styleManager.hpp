@@ -16,10 +16,10 @@ class StyleManager {
     
         void drawStringHighlight(std::string content, int x, int y, ofTrueTypeFont & f, bool centered);
     
-        ofColor blue = ofColor::fromHex(0x99F3FF);
-        ofColor green = ofColor::fromHex(0x0AFF64);
+        ofColor blue = ofColor::fromHex(0x33e7ff);
+        ofColor green = ofColor::fromHex(0x00FF64);
     
-        ofColor red = ofColor::fromHex(0xFF5C9A);
+        ofColor red = ofColor::fromHex(0xFF385D);
         ofColor oldBlue = ofColor(194, 253, 80);
     
     

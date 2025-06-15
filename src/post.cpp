@@ -88,13 +88,14 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
             if(state == 20) {
                 ofTranslate(size/2, size/2, 0);
             }
-            if(deleted) {
+            if((deleted || topic == "9w14v34597n24rw") && state == 30) {
                 ofSetColor(StyleManager::getInstance().red);
                 ofPushMatrix();
                 ofRotateDeg(45);
                 ofDrawRectangle(-20, -4, 40, 8);
                 ofDrawRectangle(-4, -20, 8, 40);
                 ofPopMatrix();
+                
                 ofSetColor(255, 255, 255, 30);
                 
             } else {
@@ -117,9 +118,7 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                         scale = 2;
                     }
                     ofScale(scale);
-//                    if(StateManager::getInstance().debug) {
-                        ofDrawRectangle(-mask_rect.width/2, -mask_rect.height/2, mask_rect.width, mask_rect.height);
-//                    }
+                    ofDrawRectangle(-mask_rect.width/2, -mask_rect.height/2, mask_rect.width, mask_rect.height);
                     
                     ofPopStyle();
                     ofFill();

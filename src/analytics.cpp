@@ -43,25 +43,40 @@ void analytics::resetCounters()  {
 }
 void analytics::analyse(vector<post>* posts){
     resetCounters();
+    float absoluteWeight = 0;
     for (auto& item : *posts) {
         for(int j = 0;  j < topics.size()-1; j++) {
             if(topics[j].name == item.topic) {
                 topics[j].totalweight += item.time_watched/800;
                 topics[j].totalweight += item.clicked * 15;
+                
+                absoluteWeight += topics[j].totalweight;
             }
         }
     }
+    
     int most_id = 0;
     for(int j = 0;  j < topics.size(); j++) {
         if(topics[j].totalweight > topics[most_id].totalweight) {
             most_id = j;
         }
     }
+    
+    int second_most_id = 0;
+    if(most_id == 0) { second_most_id = 1; }
+    for(int j = 0;  j < topics.size(); j++) {
+        if(topics[j].totalweight > topics[second_most_id].totalweight && j != most_id) {
+            second_most_id = j;
+        }
+    }
     if(topics[most_id].totalweight > min_watch_time) {
-        ofLog() << "topic deduced " << topics[most_id].handle;
+        ofLog() << "topic deduced " << topics[most_id].handle << " " << topics[most_id].totalweight;
+        ofLog() << "second deduced " << topics[second_most_id].handle << " " << topics[second_most_id].totalweight;
         StateManager::getInstance().setDeduced(most_id);
         deduced = most_id;
     }
+    
+    StateManager::getInstance().setCertainty(ofMap(topics[second_most_id].totalweight, 0, topics[most_id].totalweight, 90, 50));
     
     for(int i = 0; i < topics.size(); i++) {
         StateManager::getInstance().topics[i].totalweight = topics[i].totalweight;
@@ -86,10 +101,8 @@ void analytics::detect_empathy(vector<post>* posts, bool triggered){
         StateManager::getInstance().topics[i].focus_time = topics[i].focus_time;
     }
     int total_watch_time = topics[deduced].focus_time + topics[topics.size()-1].focus_time;
+    
     if(total_watch_time > 10) {
-        
-        
-        
         float difference = (float)topics[deduced].focus_time / ((float)topics[topics.size()-1].focus_time + 0.0001);
         if(difference > 1) {
             difference = 1;

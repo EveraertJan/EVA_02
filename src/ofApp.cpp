@@ -12,7 +12,7 @@ void ofApp::setup(){
     StateManager::getInstance().topics.push_back({"5eofxxi10os7y64", "migration", 0, 0});
     StateManager::getInstance().topics.push_back({"2xia5v5pg0tv3b8", "poverty", 0, 0});
     StateManager::getInstance().topics.push_back({"u67379k9vu56d8n", "climate", 0, 0});
-    StateManager::getInstance().topics.push_back({"20gaoy5np982eaz", "Extremism", 0, 0});
+    StateManager::getInstance().topics.push_back({"20gaoy5np982eaz", "Political divide", 0, 0});
     StateManager::getInstance().topics.push_back({"9w14v34597n24rw", "none", 0, 0});
     
     
@@ -52,7 +52,7 @@ void ofApp::setup(){
     StyleManager::getInstance().base_font.load("font/mono2.ttf", 16);
     StyleManager::getInstance().base_font.setLetterSpacing(1.05);
     StyleManager::getInstance().mid_font.load("font/mono2.ttf", 20);
-    StyleManager::getInstance().mid_font.setLineHeight(28);
+    StyleManager::getInstance().mid_font.setLineHeight(32);
     StyleManager::getInstance().large_font.load("font/inputmono.ttf", 76);
     StyleManager::getInstance().bold_font.load("font/inputmono.ttf", 24);
     StyleManager::getInstance().debug_font.load("font/inputmono.ttf", 12);
@@ -185,7 +185,7 @@ void ofApp::draw() {
     if(state == 11) {
         // consent to extreme content
         drawState("INFORMING CONSENT");
-        consent_content.draw("WARNING", "EXTREME CONTENT", "This process may involve exposure to graphic, disturbing, or otherwise extreme imagery, including content that some users may find deeply unsettling or offensive. Viewer discretion is strongly advised. Please confirm that you are prepared to proceed.", "Yes", "No", true);
+        consent_content.draw("WARNING", "EXTREME CONTENT", "This process may involve exposure to graphic, disturbing, or otherwise extreme imagery, including content that some users may find deeply unsettling or offensive. Viewer discretion is strongly advised. // //  Please confirm that you are prepared to proceed.", "Yes", "No", true);
         if(consent_content.accepted == 1) {
             StateManager::getInstance().setState(20);
         } else if(consent_content.accepted == 0) {
@@ -213,7 +213,10 @@ void ofApp::draw() {
         feed.draw();
         std::string top = StateManager::getInstance().topics[StateManager::getInstance().getDeduced()].handle;
         ofSetColor(255);
-        ack_topic_found.draw("TOPIC DEDUCED", top, "Press continue to reduce empathy. // // We will use  techniques known to cause empathy fatigue to achieve apathy. // Pressing 'abort', or walking away will seize paiment", "Continue", "Abort", true);
+        stringstream ss;
+        ss << std::endl << "From the posts you have liked, looked at, and ignored, the system deduced with " << ofToString(StateManager::getInstance().certainty) << " percent certainty what you care about. " << " // // ";
+        ss << std::endl << " The feed will adjust in intensity while mixing targeted and resting content, tracking your focus and clicks. Interaction ends when fatigue is detected. ";
+        ack_topic_found.draw("TOPIC DEDUCED", top, ss.str(), "Continue", "Abort", true);
         ofSetColor(0);
         ofFill();
         drawState("OPTIMISING");
@@ -242,6 +245,8 @@ void ofApp::draw() {
                     StateManager::getInstance().setEmpathy(-0.003);
                     
                 }
+            } else {
+                StateManager::getInstance().setEmpathy(-0.001);
             }
         }
         StatisticsManager::getInstance().empathy_history.push_back(StateManager::getInstance().getEmpathy());
@@ -262,7 +267,7 @@ void ofApp::draw() {
         
         
         if( StatisticsManager::getInstance().looking_away > 200) {
-            StatisticsManager::getInstance().reason = "looking away";
+            StatisticsManager::getInstance().reason = "No longer looking at the display";
             StateManager::getInstance().setEmpathy(-0.003);
         }
         if(StateManager::getInstance().click_through >= 10) {
@@ -274,17 +279,13 @@ void ofApp::draw() {
         }
         if( StateManager::getInstance().getEmpathy() < 0.2) {
             if(StatisticsManager::getInstance().looking_away< 200) {
-                StatisticsManager::getInstance().reason = "distraction, ignoring subject";
+                StatisticsManager::getInstance().reason = "Distraction, ignoring subject";
             }
             ofLog() << "look elsewhere";
             StateManager::getInstance().setState(50);
         }
     }
     if(state == 50) {
-        // done
-        ofSetColor(255);
-        logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
-        
         
         if(StateManager::getInstance().state_running > 40) {
             drawState("REWARD");
@@ -292,37 +293,37 @@ void ofApp::draw() {
             stringstream ss;
             ss << std::endl << "The system detected signs of lowered empathy, in the form of:" << " // // ";
             ss << std::endl << StatisticsManager::getInstance().reason << " // // ";
-            ss << std::endl << "Find your reward in the coin slide."  << " //";
-//            ss << std::endl << "Clicks: "  << ofToString(StatisticsManager::getInstance().clicks)  << " //" ;
-//            ss << std::endl << "Rapid scrolling instances: " <<  ofToString(StateManager::getInstance().click_through) << " times";
-            
-            ack_complete.draw("", "COMPLETE", ss.str(), "", "Restart", false);
-            if(ack_complete.accepted == 0) {
+            ss << std::endl << "You have received 10 cents in exchange for a fraction of your empathy. This transaction is final. Your behavioral data is now displayed. Please take a moment to review and reflect."  << " //";
+
+            ack_complete.draw("SESSION", "COMPLETE", ss.str(), "Restart", "", false);
+            if(ack_complete.accepted == 1) {
                 reset();
             }
         }
+        
+        
+        ofPushMatrix();
         std::vector<double> history = StatisticsManager::getInstance().empathy_history;
         ofPushStyle();
         ofSetColor(255);
-        
         ofPath p;
         p.setFilled(false);
-        p.setStrokeColor(ofColor( 60 ));
-        p.setStrokeWidth(2);
+        p.setStrokeColor(ofColor(255));
         p.setColor(ofColor(255));
-        double lastY = ofGetHeight()/2 - 200;
-        double lastX =  ofGetWidth() / 2 - 300;
-        p.moveTo(lastX, lastY);
+        p.moveTo(0, 0);
         for(int i = 0; i < history.size(); i++) {
-            double y = ofGetHeight()/2 - 100 - ofMap(history[i], 0, 1, 0, 100);
-            double x = ofGetWidth() / 2 + ofMap(i, 0, history.size(), 0, 600) - 300;
-            
+            double x = ofMap(i, 0, history.size(), 0, 500);
+            double y = ofMap(history[i], 0, 1, 0, 100);
             p.lineTo(x, y);
         }
         p.setStrokeWidth(4.);
+        ofTranslate(0, 0);
         p.draw();
         StyleManager::getInstance().mid_font.drawString("Empathy measurement", ofGetWidth() / 2 - 300, ofGetHeight()/2 - 210);
         ofPopStyle();
+        ofPopMatrix();
+        
+        
     }
     
     if(state == 10) {

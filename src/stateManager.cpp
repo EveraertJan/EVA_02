@@ -53,6 +53,14 @@ int StateManager::getDeduced() const {
     return deduced;
 }
 
+void StateManager::setCertainty(float newCertainty) {
+    if(newCertainty > 90) {
+        newCertainty = 95 - ofRandom(10);
+    }
+    certainty = newCertainty;
+}
+
+
 void StateManager::setEmpathy(float newempathy) {
 //    if(newempathy == -1) {
 //        // reset

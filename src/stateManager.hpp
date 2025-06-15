@@ -27,6 +27,7 @@ class StateManager {
         void setNumFaces(int num_faces);
     
         void reset_topic_focus();
+        void setCertainty(float newCertainty);
     
         struct Topic {
             string name;
@@ -47,6 +48,9 @@ class StateManager {
     
         int state_running = 0;
     
+        float certainty;
+        vector<float> empathy_history;
+    
     private:
         StateManager() = default;
         StateManager(const StateManager&) = delete;
@@ -56,7 +60,6 @@ class StateManager {
         int currentState = 0;
         int deduced = 0;
         
-        vector<float> empathy_history;
     
         int no_person;
 };
