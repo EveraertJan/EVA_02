@@ -11,40 +11,44 @@
 
 
 void dialog::setup() {
-    
+    logo.load("icons/logo_black.png");
 }
 void dialog::update() {
     
 }
 void dialog::draw(string question, string highlight,  string subtext, string agree, string decline) {
     ofPushMatrix();
-    ofTranslate(ofGetWidth()/2, ofGetHeight()/2-240);
+    ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
     ofSetColor(StyleManager::getInstance().green);
-    ofDrawRectangle(-320, 0, 640, 600);
-    ofSetColor(0);
+    ofDrawRectangle(-700, -450, 1400, 900);
+    ofTranslate(-100, -400);
+    ofSetColor(255);
+    logo.draw(400, 60, 160, 140);
     drawHighlightedText(question, "SELL", 80, 600, StyleManager::getInstance().bold_font);
-    StyleManager::getInstance().large_font.drawString(highlight, -StyleManager::getInstance().large_font.stringWidth(highlight)/2, 220);
+    StyleManager::getInstance().large_font.drawString(highlight, -300, 180);
     drawHighlightedText(subtext, "", 300, 600, StyleManager::getInstance().mid_font);
     
     if(StateManager::getInstance().state_running > 10) {
-        
         if(agree.length() > 0) {
             ofSetColor(0);
-            ofDrawRectangle(-300, 520, 290, 60);
+            ofDrawRectangle(-300, 580, 290, 60);
             ofSetColor(255);
-            StyleManager::getInstance().bold_font.drawString(agree, -150  - StyleManager::getInstance().bold_font.stringWidth(agree)/2, 520 + 40);
+            StyleManager::getInstance().bold_font.drawString(agree, -150  - StyleManager::getInstance().bold_font.stringWidth(agree)/2, 580 + 40);
         }
         if(decline.length() > 0) {
             ofNoFill();
             ofSetColor(0);
-            ofDrawRectangle(10, 520, 290, 60);
-            StyleManager::getInstance().bold_font.drawString(decline, 150  - StyleManager::getInstance().bold_font.stringWidth(decline)/2, 520 + 40);
+            ofDrawRectangle(10, 580, 290, 60);
+            StyleManager::getInstance().bold_font.drawString(decline, 150  - StyleManager::getInstance().bold_font.stringWidth(decline)/2, 580 + 40);
         }
         
         if(ofGetMousePressed()) {
             int x = ofGetMouseX();
             int y = ofGetMouseY();
+            int offset_x = -100;
+            int offset_y = -200-400;
             int ymin = ofGetHeight()/2-240 + 520;
+            
             if(y > ymin && y < ymin + 60) {
                 if(x < ofGetWidth()/2 && x > ofGetWidth()/2 - 370) {
                     accepted = 1;

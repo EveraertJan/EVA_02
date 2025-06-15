@@ -171,8 +171,6 @@ void ofApp::draw() {
     }
     if(state == 10) {
         // consent to selling
-        ofSetColor(255);
-        logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
         drawState("INFORMING CONSENT");
         stringstream ss;
         ss << std::endl << "If you agree, the Empathy Vending Aid (EVA) will buy a fraction of your empathy. By mimicking social media algorithms, the installation identifies what you care about and diminishes your emotional engagment. " << " // // ";

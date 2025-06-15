@@ -44,7 +44,7 @@ void comments::draw(){
     logo.draw(20, 0, 100, 100);
     ofPopMatrix();
     ofPushMatrix();
-    ofTranslate(100, 100  + (floor(visible_comments_arr[0].length() / 16) * 40 ));
+    ofTranslate(100, 100);
     ofSetColor(0);
     
     float y = 0;
