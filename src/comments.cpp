@@ -40,7 +40,7 @@ void comments::draw(){
     int line_spacing = 36;
 
     ofPushMatrix();
-    ofTranslate(50, 50);
+    ofTranslate(50, 150);
     logo.draw(20, 0, 100, 100);
     ofPopMatrix();
     ofPushMatrix();

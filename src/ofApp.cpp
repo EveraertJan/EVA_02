@@ -185,7 +185,7 @@ void ofApp::draw() {
     if(state == 11) {
         // consent to extreme content
         drawState("INFORMING CONSENT");
-        consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "This process may involve exposure to graphic, disturbing, or otherwise extreme imagery, including content that some users may find deeply unsettling or offensive. Viewer discretion is strongly advised. Please confirm that you are prepared to proceed.", "Yes", "No", true);
+        consent_content.draw("WARNING", "EXTREME CONTENT", "This process may involve exposure to graphic, disturbing, or otherwise extreme imagery, including content that some users may find deeply unsettling or offensive. Viewer discretion is strongly advised. Please confirm that you are prepared to proceed.", "Yes", "No", true);
         if(consent_content.accepted == 1) {
             StateManager::getInstance().setState(20);
         } else if(consent_content.accepted == 0) {
