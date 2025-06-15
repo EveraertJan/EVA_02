@@ -42,20 +42,18 @@ void dialog::draw(string question, string highlight,  string subtext, string agr
         }
         
         if(ofGetMousePressed()) {
-            accepted_touched += 1;
-            if(accepted_touched >= press_time){
-                int x = ofGetMouseX();
-                int y = ofGetMouseY();
-                int ymin = ofGetHeight()/2-240 + 520;
-                if(y > ymin && y < ymin + 60) {
-                    if(x < ofGetWidth()/2 && x > ofGetWidth()/2 - 370) {
-                        accepted = 1;
-                    }
-                    if(x > ofGetWidth()/2 && x < ofGetWidth()/2 + 370) {
-                        accepted = 0;
-                    }
+            int x = ofGetMouseX();
+            int y = ofGetMouseY();
+            int ymin = ofGetHeight()/2-240 + 520;
+            if(y > ymin && y < ymin + 60) {
+                if(x < ofGetWidth()/2 && x > ofGetWidth()/2 - 370) {
+                    accepted = 1;
+                }
+                if(x > ofGetWidth()/2 && x < ofGetWidth()/2 + 370) {
+                    accepted = 0;
                 }
             }
+            
         } else {
             accepted_touched = 0;
         }
