@@ -86,9 +86,12 @@ float StateManager::getEmpathy() const {
 
 void StateManager::setNoPerson(int newNoPerson) {
     no_person = newNoPerson;
+    ofLog() << "no person";
     if(no_person > ofGetFrameRate() * 30) {
         resetNecessary = true;
+        ofLog() << "no person for more than 30";
         currentState = 0;
+        
     }
 }
 int StateManager::getNoPerson() const {

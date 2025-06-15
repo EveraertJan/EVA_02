@@ -117,12 +117,10 @@ void mediapipeTracker::update(){
         }
     }
     
-    if(faceTracker->getFaces().size() > 0) {
-        if( StateManager::getInstance().newPerson) {
-            // generateID for the person
-            StateManager::getInstance().currentPerson = floor(ofRandom(10000));
-            StateManager::getInstance().newPerson = false;
-        }
+    if(faceTracker->getFaces().size() > 0 && StateManager::getInstance().newPerson ) {
+        // generateID for the person
+        StateManager::getInstance().currentPerson = floor(ofRandom(10000));
+        StateManager::getInstance().newPerson = false;
     } else {
         StateManager::getInstance().newPerson = true;
     }
