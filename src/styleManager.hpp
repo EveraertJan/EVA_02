@@ -12,12 +12,24 @@
 class StyleManager {
     public:
         static StyleManager& getInstance();
-
+        void setup();
+    
+        void drawStringHighlight(std::string content, bool centered);
+    
         ofColor blue = ofColor::fromHex(0x99F3FF);
         ofColor green = ofColor::fromHex(0x0AFF64);
     
         ofColor red = ofColor::fromHex(0xFF5C9A);
         ofColor oldBlue = ofColor(194, 253, 80);
+    
+    
+        ofTrueTypeFont base_font;
+        ofTrueTypeFont debug_font;
+        ofTrueTypeFont large_font;
+        ofTrueTypeFont bold_font;
+        ofTrueTypeFont state_font;
+        ofTrueTypeFont mid_font;
+        
     private:
         StyleManager() = default;
         StyleManager(const StyleManager&) = delete;

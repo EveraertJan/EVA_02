@@ -23,27 +23,33 @@ void OSCManager::setup() {
 void OSCManager::draw() {
 }
 void OSCManager::sendColor(ofColor c) {
-    ofxOscMessage message;
-    message.setAddress("/LED");
-    ofLog() << "color" << c.r << "," << c.g << "," << c.b;
-    message.addIntArg(c.r);
-    message.addIntArg(c.g);
-    message.addIntArg(c.b);
-    sender.sendMessage(message);
-    ofLog() << "trigger LED";
+    try {
+        ofxOscMessage message;
+        message.setAddress("/LED");
+        message.addIntArg(c.r);
+        message.addIntArg(c.g);
+        message.addIntArg(c.b);
+        sender.sendMessage(message);
+    } catch (std::exception exc) {
+        ofLog() << "cannot send color yet";
+        setup();
+    }
 }
 void OSCManager::sendCoin() {
-    ofxOscMessage message;
-    message.setAddress("/sending_coin");
-    message.addIntArg(255);
-    sender.sendMessage(message);
-    ofLog() << "trigger coin";
+    try{
+        ofxOscMessage message;
+        message.setAddress("/sending_coin");
+        message.addIntArg(255);
+        sender.sendMessage(message);
+    } catch (std::exception exc) {
+        ofLog() << "cannot send coin yet";
+        setup();
+    }
 }
 void OSCManager::test() {
     ofColor test = 0xf905ff;
     sendColor(test);
     sendCoin();
-    ofLog() << "trigger TEST";
 }
 
 

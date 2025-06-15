@@ -12,10 +12,6 @@
 
 void dialog::setup() {
     
-    font.load("font/mono2.ttf", 16);
-    font.setLetterSpacing(.9);
-    largeFont.load("font/inputmono.ttf", 68);
-    mono_bold.load("font/inputmono.ttf", 24);
 }
 void dialog::update() {
     
@@ -26,21 +22,21 @@ void dialog::draw(string question, string highlight,  string subtext, string agr
     ofSetColor(StyleManager::getInstance().green);
     ofDrawRectangle(-320, 0, 640, 600);
     ofSetColor(0);
-    drawHighlightedText(question, "SELL", 80, 600, mono_bold);
-    largeFont.drawString(highlight, -largeFont.stringWidth(highlight)/2, 220);
-    drawHighlightedText(subtext, "", 300, 600, font);
+    drawHighlightedText(question, "SELL", 80, 600, StyleManager::getInstance().bold_font);
+    StyleManager::getInstance().large_font.drawString(highlight, -StyleManager::getInstance().large_font.stringWidth(highlight)/2, 220);
+    drawHighlightedText(subtext, "", 300, 600, StyleManager::getInstance().mid_font);
     
     if(agree.length() > 0) {
         ofSetColor(0);
         ofDrawRectangle(-300, 520, 290, 60);
         ofSetColor(255);
-        mono_bold.drawString(agree, -150  - mono_bold.stringWidth(agree)/2, 520 + 40);
+        StyleManager::getInstance().bold_font.drawString(agree, -150  - StyleManager::getInstance().bold_font.stringWidth(agree)/2, 520 + 40);
     }
     if(decline.length() > 0) {
         ofNoFill();
         ofSetColor(0);
         ofDrawRectangle(10, 520, 290, 60);
-        mono_bold.drawString(decline, 150  - mono_bold.stringWidth(decline)/2, 520 + 40);
+        StyleManager::getInstance().bold_font.drawString(decline, 150  - StyleManager::getInstance().bold_font.stringWidth(decline)/2, 520 + 40);
     }
     
     ofPopMatrix();

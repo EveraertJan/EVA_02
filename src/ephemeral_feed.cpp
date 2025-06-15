@@ -4,8 +4,8 @@
 #include "stateManager.hpp"
 
 void ephemeral_feed::setup(){
-  mono_bold.load("font/inputmono.ttf", 12);
-  font.load("font/mono2.ttf", 12);
+  mono_bold.load("font/inputmono.ttf", 16);
+  font.load("font/mono2.ttf", 16);
   font.setLetterSpacing(.9);
   largeFont.load("font/dots.ttf", 24);
 

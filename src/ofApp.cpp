@@ -4,8 +4,6 @@
 #include "statisticsManager.hpp"
 #include "styleManager.hpp"
 
-
-//ED217C
 //--------------------------------------------------------------
 void ofApp::setup(){
     StateManager::getInstance().topics.push_back({"828w2zrrs1bgv36", "war", 0, 0});
@@ -20,10 +18,6 @@ void ofApp::setup(){
     
     ofSetVerticalSync(true);
     ofSetFrameRate(30);
-    mono_bold.load("font/inputmono.ttf", 12);
-    font.load("font/mono2.ttf", 12);
-    font.setLetterSpacing(.9);
-    largeFont.load("font/dots.ttf", 24);
 
     logo.load("icons/logo_black.png");
     
@@ -53,6 +47,15 @@ void ofApp::setup(){
     
     OSCManager::getInstance().setup();
     StatisticsManager::getInstance().reset();
+    StyleManager::getInstance().setup();
+    
+    StyleManager::getInstance().base_font.load("font/mono2.ttf", 12);
+    StyleManager::getInstance().base_font.setLetterSpacing(1.05);
+    StyleManager::getInstance().mid_font.load("font/mono2.ttf", 20);
+    StyleManager::getInstance().large_font.load("font/inputmono.ttf", 68);
+    StyleManager::getInstance().bold_font.load("font/inputmono.ttf", 24);
+    StyleManager::getInstance().debug_font.load("font/inputmono.ttf", 12);
+    StyleManager::getInstance().state_font.load("font/dots.ttf", 24);
     
     
 #if __linux__
@@ -253,21 +256,21 @@ void ofApp::draw() {
 //        }
         
         
-        ofDrawBitmapStringHighlight(ofToString(StatisticsManager::getInstance().looking_away), ofVec2f(500, 500));
-        ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().click_through), ofVec2f(500, 520));
-        ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().getEmpathy()), ofVec2f(500, 540));
+        ofDrawBitmapStringHighlight(ofToString(StatisticsManager::getInstance().looking_away), ofVec2f(ofGetWidth()-40, ofGetHeight()-50));
+        ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().click_through), ofVec2f(ofGetWidth()-40, ofGetHeight()-70));
+        ofDrawBitmapStringHighlight(ofToString(StateManager::getInstance().getEmpathy()), ofVec2f(ofGetWidth()-40, ofGetHeight()-90));
         
         
+        if( StatisticsManager::getInstance().looking_away > 200) {
+            StatisticsManager::getInstance().reason = "looking away";
+            StateManager::getInstance().setEmpathy(-0.003);
+        }
         if(StateManager::getInstance().click_through >= 10) {
             StatisticsManager::getInstance().reason = "boredom, rapid scrolling";
             ofLog() << "rapid scrolling";
             StateManager::getInstance().setEmpathy(-1);
             StateManager::getInstance().setState(50);
             
-        }
-        if( StatisticsManager::getInstance().looking_away > 200) {
-            StatisticsManager::getInstance().reason = "looking away";
-            StateManager::getInstance().setEmpathy(-0.003);
         }
         if( StateManager::getInstance().getEmpathy() < 0.2) {
             if(StatisticsManager::getInstance().looking_away< 200) {
@@ -300,6 +303,7 @@ void ofApp::draw() {
         }
         std::vector<double> history = StatisticsManager::getInstance().empathy_history;
         ofBeginShape();
+        ofSetLineWidth(2);
         for(int i = 0; i < history.size(); i++) {
             double y = ofMap(history[i], 0, 1, 0, 100);
             double x = ofMap(i, 0, history.size(), 0, 600);
@@ -308,7 +312,7 @@ void ofApp::draw() {
             ofVertex(ofGetWidth() / 2 + x - 300, ofGetHeight()/2 - 100 - y);
         }
         ofEndShape();
-        ofDrawBitmapString("Empathy measurement", ofGetWidth() / 2 - 300, ofGetHeight()/2 - 210);
+        StyleManager::getInstance().base_font.drawString("Empathy measurement", ofGetWidth() / 2 - 300, ofGetHeight()/2 - 210);
     }
     
     if(state == 10) {
@@ -328,22 +332,21 @@ void ofApp::draw() {
     
     if(error.length() > 0) {
         ofFill();
-        ofRectangle r = largeFont.getStringBoundingBox(error, ofGetWidth()/2, ofGetHeight()-200);
+        ofRectangle r = StyleManager::getInstance().state_font.getStringBoundingBox(error, ofGetWidth()/2, ofGetHeight()-200);
         ofSetColor(0);
         ofDrawRectangle(r.position.x - r.width/2, r.position.y, r.width, r.height);
         ofSetColor(255);
-        largeFont.drawString(error, ofGetWidth()/2 - r.width/2, ofGetHeight()-200);
+        StyleManager::getInstance().state_font.drawString(error, ofGetWidth()/2 - r.width/2, ofGetHeight()-200);
     }
 }
 void ofApp::drawState(string state_message) {
-    
     ofPushMatrix();
     ofTranslate(ofGetWidth() - 50, 50);
     ofSetColor(0);
-    ofRectangle r = largeFont.getStringBoundingBox(state_message, 0, 0);
+    ofRectangle r = StyleManager::getInstance().state_font.getStringBoundingBox(state_message, 0, 0);
     ofDrawRectangle(r.x - r.width, r.y + r.height, r.width, r.height);
     ofSetColor(255);
-    largeFont.drawString(state_message, -r.width, r.height);
+    StyleManager::getInstance().state_font.drawString(state_message, r.x-r.width, r.height);
     ofPopMatrix();
 }
 

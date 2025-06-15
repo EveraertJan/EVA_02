@@ -11,3 +11,8 @@ StyleManager& StyleManager::getInstance() {
     static StyleManager instance;
     return instance;
 }
+
+
+void StyleManager::setup() {
+    ofTrueTypeFont::setGlobalDpi(72);
+}

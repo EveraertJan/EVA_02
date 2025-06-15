@@ -59,11 +59,6 @@ public:
     std::vector<int> w_avgs;
     std::vector<int> h_avgs;
     
-    ofTrueTypeFont baseFont;
-    
-    ofTrueTypeFont font;
-    ofTrueTypeFont mono_bold;
-    ofTrueTypeFont largeFont;
     ofImage logo;
     
     ofVec2f look_at;

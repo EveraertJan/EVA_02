@@ -15,10 +15,6 @@ class dialog : public ofBaseApp{
         void draw(string question, string highlight, string subtext, string agree, string decline);
         void drawHighlightedText(string text, string highlightWord, float y, float maxWidth, ofTrueTypeFont &font);
     
-        ofTrueTypeFont font;
-        ofTrueTypeFont mono_bold;
-        ofTrueTypeFont largeFont;
-    
     int accepted = -1;
     int accepted_touched = 0;
     int press_time = 12;

@@ -19,7 +19,11 @@ void post::setup(string path, string t, int id, string mask_path, int r, string 
     position = ofVec3f(ofGetWidth() / 2, ofGetHeight() / 2, 0);
     target_position = ofVec3f(x * 600, y * 600, 0);
     post_id = id;
-    mono_bold.load("font/inputmono.ttf", 12);
+    
+    
+//    mono_bold.load("font/inputmono.ttf", 72);
+    mono_bold.load("font/dots.ttf", 24);
+
     size = 592;
     
     mask_str = mask_path;
@@ -152,23 +156,18 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
             if(state == 20 || state == 40) {
                 ofPushStyle();
                 
-                    if(StateManager::getInstance().state_running < 20 && StateManager::getInstance().getState() == 20) {
-                        ofDrawBitmapStringHighlight("Click to like the post", -80, 0);
-//                        ofRectangle textbox = mono_bold.getStringBoundingBox("Click to like this post", 0, 0);
-//                        ofSetColor(0);
-//                        ofFill();
-//                        ofDrawRectangle(textbox);
-//                        ofSetColor(255);
-//                        mono_bold.drawString("Click to like this post", 0, 0);
-                    }
                 if(clicked) {
                     ofSetColor(StyleManager::getInstance().green);
                 } else {
-                    ofSetColor(255, 255, 255, 50);
+                    ofSetColor(255, 255, 255, 150);
                     
                 }
                 like.draw(-like.getWidth()/2, -like.getHeight()/2);
                 ofPopStyle();
+                ofSetColor(255);
+                ofFill();
+                ofDrawBitmapStringHighlight("x", 0, 0);
+                mono_bold.drawString("Click to like the post", 0, 0);
             }
         }
         ofPopMatrix();
