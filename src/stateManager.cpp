@@ -85,14 +85,22 @@ float StateManager::getEmpathy() const {
 }
 
 void StateManager::setNoPerson(int newNoPerson) {
-    no_person = newNoPerson;
-    ofLog() << "no person";
-    if(no_person > ofGetFrameRate() * 30) {
-        resetNecessary = true;
-        ofLog() << "no person for more than 30";
-        currentState = 0;
-        
+    if(no_person != -1) {
+        no_person += newNoPerson;
+        if(no_person > ofGetFrameRate() * 30) {
+            resetNecessary = true;
+            ofLog() << "no person for more than 30";
+            currentState = 0;
+            no_person = -1;
+        }
     }
+    if(newNoPerson == 0 && no_person == -1) {
+        no_person = 0;
+        currentPerson = floor(ofRandom(1000000));
+        currentState = 10;
+    }
+    ofDrawBitmapStringHighlight("no person detected", ofVec2f(ofGetWidth()/2-50, ofGetHeight()-100));
+    
 }
 int StateManager::getNoPerson() const {
     return no_person;

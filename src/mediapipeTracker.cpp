@@ -112,18 +112,9 @@ void mediapipeTracker::update(){
             }
             view_guess = ofVec2f(((avg.x/view_cache.size()) * scale.x)+ offset.x, ((avg.y / view_cache.size()) * scale.y)+ offset.y) ;
             
-        } else {
-            StateManager::getInstance().setNoPerson( StateManager::getInstance().getNoPerson() + 1 );
         }
     }
     
-    if(faceTracker->getFaces().size() > 0 && StateManager::getInstance().newPerson ) {
-        // generateID for the person
-        StateManager::getInstance().currentPerson = floor(ofRandom(10000));
-        StateManager::getInstance().newPerson = false;
-    } else {
-        StateManager::getInstance().newPerson = true;
-    }
 }
 
 //--------------------------------------------------------------
@@ -184,10 +175,6 @@ void mediapipeTracker::draw(){
                 ofDrawBitmapStringHighlight(ss.str(), 10, 10 );
                 ofPopMatrix();
             }
-            
-            
-            
-            
             tracked = polyTrack(orient.x, orient.y, orient.z, orient.w, EYE_LOOK_LEFT, EYE_LOOK_RIGHT, EYE_LOOK_UP, EYE_LOOK_DOWN, face->getPosition().x, face->getPosition().y, face->getPosition().z);
             
             if(StateManager::getInstance().debug){
@@ -196,8 +183,6 @@ void mediapipeTracker::draw(){
                 ofNoFill();
                 ofDrawCircle(tracked.x, tracked.y, 10);
             }
-            
-            
             
             if(abs(orient.z) > 0.25) {
                 
@@ -214,6 +199,11 @@ void mediapipeTracker::draw(){
             while(view_cache.size() > 8) {
                 view_cache.erase(view_cache.begin());
             }
+            StateManager::getInstance().setNoPerson( 0 );
+        } else {
+            //no faces detected
+            StateManager::getInstance().setNoPerson( 1 );
+            
         }
         
         
