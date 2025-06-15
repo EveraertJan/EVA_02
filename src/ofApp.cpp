@@ -309,7 +309,7 @@ void ofApp::draw() {
         ofPath p;
         p.setFilled(false);
         p.setStrokeColor(ofColor( 60 ));
-        p.setStrokeWidth(5);
+        p.setStrokeWidth(2);
         p.setColor(ofColor(255));
         double lastY = ofGetHeight()/2 - 200;
         double lastX =  ofGetWidth() / 2 - 300;
