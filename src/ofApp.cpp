@@ -53,7 +53,7 @@ void ofApp::setup(){
     StyleManager::getInstance().base_font.setLetterSpacing(1.05);
     StyleManager::getInstance().mid_font.load("font/mono2.ttf", 20);
     StyleManager::getInstance().mid_font.setLineHeight(28);
-    StyleManager::getInstance().large_font.load("font/inputmono.ttf", 68);
+    StyleManager::getInstance().large_font.load("font/inputmono.ttf", 76);
     StyleManager::getInstance().bold_font.load("font/inputmono.ttf", 24);
     StyleManager::getInstance().debug_font.load("font/inputmono.ttf", 12);
     StyleManager::getInstance().state_font.load("font/dots.ttf", 24);
@@ -190,7 +190,7 @@ void ofApp::draw() {
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
 
         drawState("INFORMING CONSENT");
-        consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "Do you agree to be exposed to content that is extreme or explicit in nature? // // The images show may be triggering to some viewers. ", "Yes", "No");
+        consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "This process may involve exposure to graphic, disturbing, or otherwise extreme imagery, including content that some users may find deeply unsettling or offensive. Viewer discretion is strongly advised. Please confirm that you are prepared to proceed.", "Yes", "No");
         if(consent_content.accepted == 1) {
             StateManager::getInstance().setState(20);
         } else if(consent_content.accepted == 0) {
@@ -323,11 +323,8 @@ void ofApp::draw() {
             double x = ofGetWidth() / 2 + ofMap(i, 0, history.size(), 0, 600) - 300;
             
             p.lineTo(x, y);
-//            ofDrawLine(x, y, lastX, lastY);
-//            lastY = ofGetHeight()/2 - 100 - ofMap(history[i], 0, 1, 0, 100);
-//            lastX =ofGetWidth() / 2 + ofMap(i, 0, history.size(), 0, 600) - 300;
         }
-        p.setStrokeWidth(8.);
+        p.setStrokeWidth(4.);
         p.draw();
         StyleManager::getInstance().mid_font.drawString("Empathy measurement", ofGetWidth() / 2 - 300, ofGetHeight()/2 - 210);
         ofPopStyle();

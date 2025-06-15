@@ -26,23 +26,21 @@ void dialog::draw(string question, string highlight,  string subtext, string agr
     StyleManager::getInstance().large_font.drawString(highlight, -StyleManager::getInstance().large_font.stringWidth(highlight)/2, 220);
     drawHighlightedText(subtext, "", 300, 600, StyleManager::getInstance().mid_font);
     
-    if(agree.length() > 0) {
-        ofSetColor(0);
-        ofDrawRectangle(-300, 520, 290, 60);
-        ofSetColor(255);
-        StyleManager::getInstance().bold_font.drawString(agree, -150  - StyleManager::getInstance().bold_font.stringWidth(agree)/2, 520 + 40);
-    }
-    if(decline.length() > 0) {
-        ofNoFill();
-        ofSetColor(0);
-        ofDrawRectangle(10, 520, 290, 60);
-        StyleManager::getInstance().bold_font.drawString(decline, 150  - StyleManager::getInstance().bold_font.stringWidth(decline)/2, 520 + 40);
-    }
-    
-    ofPopMatrix();
-    
-    
     if(StateManager::getInstance().state_running > 10) {
+        
+        if(agree.length() > 0) {
+            ofSetColor(0);
+            ofDrawRectangle(-300, 520, 290, 60);
+            ofSetColor(255);
+            StyleManager::getInstance().bold_font.drawString(agree, -150  - StyleManager::getInstance().bold_font.stringWidth(agree)/2, 520 + 40);
+        }
+        if(decline.length() > 0) {
+            ofNoFill();
+            ofSetColor(0);
+            ofDrawRectangle(10, 520, 290, 60);
+            StyleManager::getInstance().bold_font.drawString(decline, 150  - StyleManager::getInstance().bold_font.stringWidth(decline)/2, 520 + 40);
+        }
+        
         if(ofGetMousePressed()) {
             accepted_touched += 1;
             if(accepted_touched >= press_time){
@@ -62,6 +60,10 @@ void dialog::draw(string question, string highlight,  string subtext, string agr
             accepted_touched = 0;
         }
     }
+    
+    ofPopMatrix();
+    
+    
 }
 
 
