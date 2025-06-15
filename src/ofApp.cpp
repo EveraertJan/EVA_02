@@ -307,7 +307,7 @@ void ofApp::draw() {
         p.moveTo(0, 0);
         for(int i = 0; i < history.size(); i++) {
             double x = ofMap(i, 0, history.size(), 0, 420);
-            double y = ofMap(history[i], 0, 1, 650, 0);
+            double y = ofMap(history[i], 0, 1, 620, 0);
             p.lineTo(x, y);
         }
         p.setStrokeWidth(4.);
