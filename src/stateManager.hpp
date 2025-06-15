@@ -24,6 +24,8 @@ class StateManager {
         void setNoPerson(int newNoPerson);
         int getNoPerson() const;
     
+        void setNumFaces(int num_faces);
+    
         void reset_topic_focus();
     
         struct Topic {

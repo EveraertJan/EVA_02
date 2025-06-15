@@ -200,12 +200,8 @@ void mediapipeTracker::draw(){
             while(view_cache.size() > 8) {
                 view_cache.erase(view_cache.begin());
             }
-            StateManager::getInstance().setNoPerson( 0 );
-        } else {
-            //no faces detected
-            StateManager::getInstance().setNoPerson( 1 );
-            
         }
+        StateManager::getInstance().setNumFaces( faceTracker->getFaces().size()  );
         
         
         int rounding = 100;
