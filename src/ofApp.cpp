@@ -52,7 +52,7 @@ void ofApp::setup(){
     StyleManager::getInstance().base_font.load("font/mono2.ttf", 16);
     StyleManager::getInstance().base_font.setLetterSpacing(1.05);
     StyleManager::getInstance().mid_font.load("font/mono2.ttf", 20);
-    StyleManager::getInstance().mid_font.setLineHeight(32);
+    StyleManager::getInstance().mid_font.setLineHeight(28);
     StyleManager::getInstance().large_font.load("font/inputmono.ttf", 76);
     StyleManager::getInstance().bold_font.load("font/inputmono.ttf", 24);
     StyleManager::getInstance().debug_font.load("font/inputmono.ttf", 12);
@@ -312,14 +312,14 @@ void ofApp::draw() {
         p.setColor(ofColor(255));
         p.moveTo(0, 0);
         for(int i = 0; i < history.size(); i++) {
-            double x = ofMap(i, 0, history.size(), 0, 500);
-            double y = ofMap(history[i], 0, 1, 0, 100);
+            double x = ofMap(i, 0, history.size(), 0, 450);
+            double y = ofMap(history[i], 0, 1, 600, 0);
             p.lineTo(x, y);
         }
         p.setStrokeWidth(4.);
-        ofTranslate(0, 0);
+        ofTranslate(ofGetWidth() / 2 + 100, ofGetHeight()/2 - 200);
         p.draw();
-        StyleManager::getInstance().mid_font.drawString("Empathy measurement", ofGetWidth() / 2 - 300, ofGetHeight()/2 - 210);
+        StyleManager::getInstance().mid_font.drawString("Empathy measurement", 40, -20);
         ofPopStyle();
         ofPopMatrix();
         
