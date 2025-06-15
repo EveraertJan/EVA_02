@@ -13,10 +13,10 @@ class StyleManager {
     public:
         static StyleManager& getInstance();
 
-        ofColor blue = ofColor::fromHex(0x00e0ff);
-        ofColor green = ofColor::fromHex(0x18ff6d);
+        ofColor blue = ofColor::fromHex(0x99F3FF);
+        ofColor green = ofColor::fromHex(0x0AFF64);
     
-        ofColor red = ofColor::fromHex(0xfa0060);
+        ofColor red = ofColor::fromHex(0xFF5C9A);
         ofColor oldBlue = ofColor(194, 253, 80);
     private:
         StyleManager() = default;
