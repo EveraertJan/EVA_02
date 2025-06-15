@@ -166,7 +166,7 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                 if(state == 20 && StateManager::getInstance().state_running < 10) {
                     StyleManager::getInstance().drawStringHighlight("Click to like the post", 0, 50, StyleManager::getInstance().mid_font, true);
                 }
-                StyleManager::getInstance().drawStringHighlight(ofToString(time_watched), -size/2 + 20, -size/2 + 30, StyleManager::getInstance().debug_font, false);
+                StyleManager::getInstance().drawStringHighlight(ofToString(time_watched), -size/2 + 20, -size/2 + 32, StyleManager::getInstance().debug_font, false);
 
             }
         }

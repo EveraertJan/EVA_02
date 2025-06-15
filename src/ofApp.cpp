@@ -49,7 +49,7 @@ void ofApp::setup(){
     StatisticsManager::getInstance().reset();
     StyleManager::getInstance().setup();
     
-    StyleManager::getInstance().base_font.load("font/mono2.ttf", 12);
+    StyleManager::getInstance().base_font.load("font/mono2.ttf", 16);
     StyleManager::getInstance().base_font.setLetterSpacing(1.05);
     StyleManager::getInstance().mid_font.load("font/mono2.ttf", 20);
     StyleManager::getInstance().large_font.load("font/inputmono.ttf", 68);
@@ -57,6 +57,7 @@ void ofApp::setup(){
     StyleManager::getInstance().debug_font.load("font/inputmono.ttf", 12);
     StyleManager::getInstance().state_font.load("font/dots.ttf", 24);
     
+    ofDisableArbTex();
     
 #if __linux__
     StateManager::getInstance().debug = false;
@@ -302,17 +303,31 @@ void ofApp::draw() {
             }
         }
         std::vector<double> history = StatisticsManager::getInstance().empathy_history;
-        ofBeginShape();
-        ofSetLineWidth(2);
+        ofPushStyle();
+        ofSetColor(255);
+        ofSetLineWidth(80);
+        
+        ofPath p;
+        p.setFilled(false);
+        p.setStrokeColor(ofColor( 60 ));
+        p.setStrokeWidth(20);
+        p.setColor(ofColor(255));
+        double lastY = ofGetHeight()/2 - 200;
+        double lastX =  ofGetWidth() / 2 - 300;
+        p.moveTo(lastX, lastY);
         for(int i = 0; i < history.size(); i++) {
-            double y = ofMap(history[i], 0, 1, 0, 100);
-            double x = ofMap(i, 0, history.size(), 0, 600);
-            ofSetColor(255);
-//            ofDrawRectangle(ofGetWidth() / 2 + x - 300, ofGetHeight()/2 - 100 - y, 1, 1);
-            ofVertex(ofGetWidth() / 2 + x - 300, ofGetHeight()/2 - 100 - y);
+            double y = ofGetHeight()/2 - 100 - ofMap(history[i], 0, 1, 0, 100);
+            double x = ofGetWidth() / 2 + ofMap(i, 0, history.size(), 0, 600) - 300;
+            
+            p.lineTo(x, y);
+//            ofDrawLine(x, y, lastX, lastY);
+//            lastY = ofGetHeight()/2 - 100 - ofMap(history[i], 0, 1, 0, 100);
+//            lastX =ofGetWidth() / 2 + ofMap(i, 0, history.size(), 0, 600) - 300;
         }
-        ofEndShape();
+        p.setStrokeWidth(8.);
+        p.draw();
         StyleManager::getInstance().base_font.drawString("Empathy measurement", ofGetWidth() / 2 - 300, ofGetHeight()/2 - 210);
+        ofPopStyle();
     }
     
     if(state == 10) {
@@ -322,6 +337,8 @@ void ofApp::draw() {
         analytics_block.draw();
     }
     mediapipe.draw();
+    
+    
     
     if(StateManager::getInstance().debug){
         gui.draw();
