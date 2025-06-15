@@ -175,7 +175,7 @@ void ofApp::draw() {
         stringstream ss;
         ss << std::endl << "If you agree, the Empathy Vending Aid (EVA) will buy a fraction of your empathy. By mimicking social media algorithms, the installation identifies what you care about and diminishes your emotional engagment. " << " // // ";
         ss << std::endl << "You will receive money, but care less about the chosen subject.";
-        consent_transaction.draw("DO YOU WANT TO SELL YOUR", "EMPATHY", ss.str(), "Yes", "No");
+        consent_transaction.draw("DO YOU WANT TO SELL YOUR", "EMPATHY", ss.str(), "Yes", "No", false);
         if(consent_transaction.accepted == 1) {
             StateManager::getInstance().setState(11);
         } else if(consent_transaction.accepted == 0) {
@@ -184,11 +184,8 @@ void ofApp::draw() {
     }
     if(state == 11) {
         // consent to extreme content
-        ofSetColor(255);
-        logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
-
         drawState("INFORMING CONSENT");
-        consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "This process may involve exposure to graphic, disturbing, or otherwise extreme imagery, including content that some users may find deeply unsettling or offensive. Viewer discretion is strongly advised. Please confirm that you are prepared to proceed.", "Yes", "No");
+        consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "This process may involve exposure to graphic, disturbing, or otherwise extreme imagery, including content that some users may find deeply unsettling or offensive. Viewer discretion is strongly advised. Please confirm that you are prepared to proceed.", "Yes", "No", true);
         if(consent_content.accepted == 1) {
             StateManager::getInstance().setState(20);
         } else if(consent_content.accepted == 0) {
@@ -216,7 +213,7 @@ void ofApp::draw() {
         feed.draw();
         std::string top = StateManager::getInstance().topics[StateManager::getInstance().getDeduced()].handle;
         ofSetColor(255);
-        ack_topic_found.draw("TOPIC DEDUCED", top, "Press continue to reduce empathy. // // We will use  techniques known to cause empathy fatigue to achieve apathy. // Pressing 'abort', or walking away will seize paiment", "Continue", "Abort");
+        ack_topic_found.draw("TOPIC DEDUCED", top, "Press continue to reduce empathy. // // We will use  techniques known to cause empathy fatigue to achieve apathy. // Pressing 'abort', or walking away will seize paiment", "Continue", "Abort", true);
         ofSetColor(0);
         ofFill();
         drawState("OPTIMISING");
@@ -299,7 +296,7 @@ void ofApp::draw() {
 //            ss << std::endl << "Clicks: "  << ofToString(StatisticsManager::getInstance().clicks)  << " //" ;
 //            ss << std::endl << "Rapid scrolling instances: " <<  ofToString(StateManager::getInstance().click_through) << " times";
             
-            ack_complete.draw("", "COMPLETE", ss.str(), "", "Restart");
+            ack_complete.draw("", "COMPLETE", ss.str(), "", "Restart", false);
             if(ack_complete.accepted == 0) {
                 reset();
             }

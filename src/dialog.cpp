@@ -16,29 +16,43 @@ void dialog::setup() {
 void dialog::update() {
     
 }
-void dialog::draw(string question, string highlight,  string subtext, string agree, string decline) {
+void dialog::draw(string question, string highlight,  string subtext, string agree, string decline, bool warning) {
     ofPushMatrix();
     ofTranslate(ofGetWidth()/2, ofGetHeight()/2);
-    ofSetColor(StyleManager::getInstance().green);
-    ofDrawRectangle(-700, -450, 1400, 900);
-    ofTranslate(-100, -400);
+    if(warning) {
+        ofSetColor(StyleManager::getInstance().red);
+    } else {
+        ofSetColor(StyleManager::getInstance().green);
+    }
+    ofDrawRectangle(-700, -450, 1400, 860);
+    ofTranslate(-180, -400);
     ofSetColor(255);
-    logo.draw(400, 60, 160, 140);
+    
+    logo.draw(380, 50, 275, 250);
     drawHighlightedText(question, "SELL", 80, 600, StyleManager::getInstance().bold_font);
     StyleManager::getInstance().large_font.drawString(highlight, -300, 180);
     drawHighlightedText(subtext, "", 300, 600, StyleManager::getInstance().mid_font);
     
     if(StateManager::getInstance().state_running > 10) {
+        
+        ofRectangle accept_area;
         if(agree.length() > 0) {
             ofSetColor(0);
-            ofDrawRectangle(-300, 580, 290, 60);
+            accept_area = ofRectangle(-300, 580, 290, 60);
+            ofDrawRectangle(accept_area);
+            accept_area.x += ofGetWidth()/2 - 180;
+            accept_area.y += ofGetHeight()/2 - 400;
             ofSetColor(255);
             StyleManager::getInstance().bold_font.drawString(agree, -150  - StyleManager::getInstance().bold_font.stringWidth(agree)/2, 580 + 40);
         }
+        ofRectangle decline_area;
         if(decline.length() > 0) {
             ofNoFill();
             ofSetColor(0);
-            ofDrawRectangle(10, 580, 290, 60);
+            decline_area = ofRectangle(10, 580, 290, 60);
+            ofDrawRectangle(decline_area);
+            decline_area.x += ofGetWidth()/2 - 180;
+            decline_area.y += ofGetHeight()/2 - 400;
             StyleManager::getInstance().bold_font.drawString(decline, 150  - StyleManager::getInstance().bold_font.stringWidth(decline)/2, 580 + 40);
         }
         
@@ -49,14 +63,14 @@ void dialog::draw(string question, string highlight,  string subtext, string agr
             int offset_y = -200-400;
             int ymin = ofGetHeight()/2-240 + 520;
             
-            if(y > ymin && y < ymin + 60) {
-                if(x < ofGetWidth()/2 && x > ofGetWidth()/2 - 370) {
-                    accepted = 1;
-                }
-                if(x > ofGetWidth()/2 && x < ofGetWidth()/2 + 370) {
-                    accepted = 0;
-                }
+            
+            if(accept_area.inside(x, y)) {
+                accepted = 1;
             }
+            if(decline_area.inside(x, y)) {
+                accepted = 0;
+            }
+            
             
         } else {
             accepted_touched = 0;

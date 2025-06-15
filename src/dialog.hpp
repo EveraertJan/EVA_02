@@ -12,7 +12,7 @@ class dialog : public ofBaseApp{
     public:
         void setup();
         void update();
-        void draw(string question, string highlight, string subtext, string agree, string decline);
+    void draw(string question, string highlight, string subtext, string agree, string decline, bool warning);
         void drawHighlightedText(string text, string highlightWord, float y, float maxWidth, ofTrueTypeFont &font);
     
     int accepted = -1;
