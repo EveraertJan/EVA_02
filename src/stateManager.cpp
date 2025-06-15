@@ -21,24 +21,22 @@ void StateManager::setState(int newState) {
         toSend.setHex(0xFFFFFF); OSCManager::getInstance().sendColor(toSend);
     }
     if(newState == 10) {
-        toSend.setHex(0xFF0000); OSCManager::getInstance().sendColor(toSend);
+        toSend.setHex(0x00FF10); OSCManager::getInstance().sendColor(toSend);
+    }
+    if(newState == 11) {
+        toSend.setHex(0xFF005D); OSCManager::getInstance().sendColor(toSend);
     }
     if(newState == 20) {
-        toSend.setHex(0xFFFF00); OSCManager::getInstance().sendColor(toSend);
+        toSend.setHex(0xff00FF); OSCManager::getInstance().sendColor(toSend);
     }
     if(newState == 30) {
-        toSend.setHex(0x00FF00); OSCManager::getInstance().sendColor(toSend);
+        toSend.setHex(0xFF005D); OSCManager::getInstance().sendColor(toSend);
     }
     if(newState == 40) {
-        toSend.setHex(0xFF00FF); OSCManager::getInstance().sendColor(toSend);
+        toSend.setHex(0x00FFFF); OSCManager::getInstance().sendColor(toSend);
     }
-    if(newState == 50) {
+    if(newState == 50) {        
         OSCManager::getInstance().sendCoin();
-        toSend.setHex(0x00FFFF); 
-        OSCManager::getInstance().sendColor(toSend);
-    }
-    if(newState == 60) {
-        toSend.setHex(0xFFFFFF); OSCManager::getInstance().sendColor(toSend);
     }
 }
 
@@ -62,17 +60,6 @@ void StateManager::setCertainty(float newCertainty) {
 
 
 void StateManager::setEmpathy(float newempathy) {
-//    if(newempathy == -1) {
-//        // reset
-//        empathy_history.clear();
-//        for(int i = 0; i < 30; i++) {
-//            empathy_history.push_back(1);
-//        }
-//    }
-//    empathy_history.push_back(newempathy);
-//    if(empathy_history.size() > history_size) {
-//        empathy_history.erase(empathy_history.begin());
-//    }
     
     empathy += newempathy;
     
@@ -84,11 +71,6 @@ void StateManager::setEmpathy(float newempathy) {
     }
 }
 float StateManager::getEmpathy() const {
-//    float tot = 0;
-//    for(auto & h : empathy_history) {
-//        tot  += h;
-//    }
-//    return tot / empathy_history.size();
     return empathy;
 }
 
@@ -107,17 +89,6 @@ void StateManager::setNoPerson(int newNoPerson) {
         }
         
     }
-//    if(newNoPerson == 0 && (no_person == -1 || no_person > 5)) {
-//        no_person = 0;
-//        currentPerson = floor(ofRandom(1000000));
-//        currentState = 10;
-//    }
-//    if(newNoPerson == 0 && currentState == 0 ) {
-//        no_person = 0;
-//        currentPerson = floor(ofRandom(1000000));
-//        currentState = 10;
-//    }
-    
 }
 int StateManager::getNoPerson() const {
     return no_person;
