@@ -17,5 +17,5 @@ class dialog : public ofBaseApp{
     
     int accepted = -1;
     int accepted_touched = 0;
-    int press_time = 3;
+    int press_time = 1;
 };
