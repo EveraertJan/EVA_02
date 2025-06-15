@@ -21,9 +21,6 @@ void post::setup(string path, string t, int id, string mask_path, int r, string 
     post_id = id;
     
     
-//    mono_bold.load("font/inputmono.ttf", 72);
-    mono_bold.load("font/dots.ttf", 24);
-
     size = 592;
     
     mask_str = mask_path;
@@ -142,15 +139,15 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
             ofSetColor(255);
             ofFill();
             if(StateManager::getInstance().debug) {
-                mono_bold.drawString(topic,0, 20);
-                mono_bold.drawString(ofToString(post_id),0, 40);
+                StyleManager::getInstance().debug_font.drawString(topic,-size/2 + 10, -size/2 + 10);
+                StyleManager::getInstance().debug_font.drawString(ofToString(post_id),-size/2 + 10, -size/2 + 30);
                 std::string tws = ofToString(StateManager::getInstance().topics[topic_id].totalweight);
-                mono_bold.drawString(tws,0, 60);
+                StyleManager::getInstance().debug_font.drawString(tws,-size/2 + 10, -size/2 + 50);
                 
                 if(x_offset > -20 && x_offset < ofGetWidth() - size/2 && y_offset > 340 && y_offset < 1000 ) {
                     ofSetColor(255);
-                    mono_bold.drawString(ofToString(screen_position.x), 30, 20);
-                    mono_bold.drawString(ofToString(screen_position.y), 30, 40);
+                    StyleManager::getInstance().debug_font.drawString(ofToString(screen_position.x), 30, 20);
+                    StyleManager::getInstance().debug_font.drawString(ofToString(screen_position.y), 30, 40);
                 }
             }
             if(state == 20 || state == 40) {
@@ -166,8 +163,11 @@ void post::draw(ofVec3f look_at, float zoom, int focus_id, bool masked){
                 ofPopStyle();
                 ofSetColor(255);
                 ofFill();
-                ofDrawBitmapStringHighlight("x", 0, 0);
-                mono_bold.drawString("Click to like the post", 0, 0);
+                if(state == 20 && StateManager::getInstance().state_running < 10) {
+                    StyleManager::getInstance().drawStringHighlight("Click to like the post", 0, 50, StyleManager::getInstance().mid_font, true);
+                }
+                StyleManager::getInstance().drawStringHighlight(ofToString(time_watched), -size/2 + 20, -size/2 + 30, StyleManager::getInstance().debug_font, false);
+
             }
         }
         ofPopMatrix();

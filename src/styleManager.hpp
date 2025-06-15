@@ -14,7 +14,7 @@ class StyleManager {
         static StyleManager& getInstance();
         void setup();
     
-        void drawStringHighlight(std::string content, bool centered);
+        void drawStringHighlight(std::string content, int x, int y, ofTrueTypeFont & f, bool centered);
     
         ofColor blue = ofColor::fromHex(0x99F3FF);
         ofColor green = ofColor::fromHex(0x0AFF64);

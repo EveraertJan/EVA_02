@@ -30,7 +30,7 @@ class post : public ofBaseApp{
         ofVec3f position;
         ofVec3f screen_position;
         ofVec3f target_position;
-        ofTrueTypeFont mono_bold;
+    
         ofURLFileLoader loader;
     
         bool greyScale = false;

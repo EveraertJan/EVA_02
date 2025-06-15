@@ -143,7 +143,7 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw() {
-    
+    ofBackground(255);
     ofSetColor(200);
     ofFill();
     int state = StateManager::getInstance().getState();
@@ -161,7 +161,7 @@ void ofApp::draw() {
         int s = 700;
         ofSetColor(255);
         logo.draw(ofGetWidth()/2 - s/2 + (s/20), ofGetHeight()/2-s*0.9, s, s * 0.9);
-        drawState("00 - AWAITING INTERACTION");
+        drawState("AWAITING INTERACTION");
         if(StateManager::getInstance().newPerson) {
             ofLog() << "spotted new person";
             StateManager::getInstance().setState(10);
@@ -171,7 +171,7 @@ void ofApp::draw() {
         // consent to selling
         ofSetColor(255);
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
-        drawState("10 - INFORMING CONSENT");
+        drawState("INFORMING CONSENT");
         consent_transaction.draw("DO YOU WANT TO SELL YOUR", "EMPATHY", "This machine will emploi techniques known to cause empathy fatigue, reducing your empathy for a subject. // // The subject is chosen algorithmically. // // In exchange, you will receive money.", "Yes", "No");
         if(consent_transaction.accepted == 1) {
             StateManager::getInstance().setState(11);
@@ -184,7 +184,7 @@ void ofApp::draw() {
         ofSetColor(255);
         logo.draw(ofGetWidth()/2 - 110, ofGetHeight()/2-600, 250, 225);
 
-        drawState("11 - INFORMING CONSENT");
+        drawState("INFORMING CONSENT");
         consent_content.draw("WARNING, THIS CONTENT MAY BE", "EXTREME", "Do you agree to be exposed to content that is extreme/explicit? // // The images show may cause triggers for some viewers. ", "Yes", "No");
         if(consent_content.accepted == 1) {
             StateManager::getInstance().setState(20);
@@ -194,7 +194,7 @@ void ofApp::draw() {
     }
     if(state == 20) {
         // detect
-        drawState("20 - DETECTING");
+        drawState("DETECTING");
         feed.draw();
         
         post * hovered = feed.getPostOnTarget(look_at);
@@ -216,7 +216,7 @@ void ofApp::draw() {
         ack_topic_found.draw("TOPIC DEDUCED", top, "Press continue to reduce empathy. // // We will use  techniques known to cause empathy fatigue // to achieve this. // Aborting will seize paiment", "Continue", "Abort");
         ofSetColor(0);
         ofFill();
-        drawState("30 - OPTIMISING");
+        drawState("OPTIMISING");
         
         if(StateManager::getInstance().state_running > 60) {
             if(ack_topic_found.accepted == 1) {
@@ -246,7 +246,7 @@ void ofApp::draw() {
         }
         StatisticsManager::getInstance().empathy_history.push_back(StateManager::getInstance().getEmpathy());
         feed.draw();
-        drawState("40 - ENFORCING");
+        drawState("ENFORCING");
         
         analytics_block.drawEmpathyBold();
         
@@ -287,7 +287,7 @@ void ofApp::draw() {
         
         
         if(StateManager::getInstance().state_running > 40) {
-            drawState("50 - REWARD");
+            drawState("REWARD");
             
             stringstream ss;
             ss << std::endl << "The system detected signs of lowered empathy, in the form of:" << "// // ";
